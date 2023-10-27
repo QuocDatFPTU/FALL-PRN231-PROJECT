@@ -1,8 +1,8 @@
 ﻿using HotelBooking.Domain.Common;
 
 namespace HotelBooking.Domain.Entities;
-public class Amenity : BaseAuditableEntity
+public class Category : BaseEntity
 {
     public string Name { get; set; } = default!;
-    public string Description { get; set; } = default!;
+    public virtual ICollection<Hotel> Hotels { get; set; } = new HashSet<Hotel>();
 }
