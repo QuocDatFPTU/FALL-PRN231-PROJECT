@@ -3,6 +3,7 @@ using System;
 using HotelBooking.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBooking.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231027001642_UpdateEntity2")]
+    partial class UpdateEntity2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,7 +159,7 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("HotelBooking.Domain.Entities.Facility", b =>
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Facilitya", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -558,12 +561,6 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("double");
 
-                    b.Property<int>("ReviewCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReviewRating")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("HotelId");
@@ -706,7 +703,7 @@ namespace HotelBooking.Infrastructure.Migrations
 
             modelBuilder.Entity("HotelBooking.Domain.Entities.HotelFacilityHighlight", b =>
                 {
-                    b.HasOne("HotelBooking.Domain.Entities.Facility", "Facility")
+                    b.HasOne("HotelBooking.Domain.Entities.Facilitya", "Facilitya")
                         .WithMany("HotelFacilityHighlights")
                         .HasForeignKey("FacilityId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -718,7 +715,7 @@ namespace HotelBooking.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Facility");
+                    b.Navigation("Facilitya");
 
                     b.Navigation("Hotel");
                 });
@@ -744,7 +741,7 @@ namespace HotelBooking.Infrastructure.Migrations
 
             modelBuilder.Entity("HotelBooking.Domain.Entities.HotelGroupFacility", b =>
                 {
-                    b.HasOne("HotelBooking.Domain.Entities.Facility", "Facility")
+                    b.HasOne("HotelBooking.Domain.Entities.Facilitya", "Facilitya")
                         .WithMany("HotelGroupFacilities")
                         .HasForeignKey("FacilityId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -756,7 +753,7 @@ namespace HotelBooking.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Facility");
+                    b.Navigation("Facilitya");
 
                     b.Navigation("HotelGroup");
                 });
@@ -856,7 +853,7 @@ namespace HotelBooking.Infrastructure.Migrations
 
             modelBuilder.Entity("HotelBooking.Domain.Entities.RoomTypeGroupFacility", b =>
                 {
-                    b.HasOne("HotelBooking.Domain.Entities.Facility", "Facility")
+                    b.HasOne("HotelBooking.Domain.Entities.Facilitya", "Facilitya")
                         .WithMany("RoomTypeGroupFacilities")
                         .HasForeignKey("FacilityId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -868,7 +865,7 @@ namespace HotelBooking.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Facility");
+                    b.Navigation("Facilitya");
 
                     b.Navigation("RoomTypeGroup");
                 });
@@ -908,7 +905,7 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Navigation("Cities");
                 });
 
-            modelBuilder.Entity("HotelBooking.Domain.Entities.Facility", b =>
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Facilitya", b =>
                 {
                     b.Navigation("HotelFacilityHighlights");
 
