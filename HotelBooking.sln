@@ -5,11 +5,11 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBooking.WebApi", "src\HotelBooking.WebApi\HotelBooking.WebApi.csproj", "{C19BB1E1-27A4-457B-9A25-4B3FCF959723}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelBooking.Domain", "src\HotelBooking.Domain\HotelBooking.Domain.csproj", "{C88C9F70-7FF8-405F-8DAF-25D8096C32E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBooking.Domain", "src\HotelBooking.Domain\HotelBooking.Domain.csproj", "{C88C9F70-7FF8-405F-8DAF-25D8096C32E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelBooking.Application", "src\HotelBooking.Application\HotelBooking.Application.csproj", "{8C42885C-809F-48EC-B802-DF711C83F2F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBooking.Application", "src\HotelBooking.Application\HotelBooking.Application.csproj", "{8C42885C-809F-48EC-B802-DF711C83F2F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelBooking.Infrastructure", "src\HotelBooking.Infrastructure\HotelBooking.Infrastructure.csproj", "{1E84CC68-8272-4635-8DB9-6D4C5FFE9033}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBooking.Infrastructure", "src\HotelBooking.Infrastructure\HotelBooking.Infrastructure.csproj", "{1E84CC68-8272-4635-8DB9-6D4C5FFE9033}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

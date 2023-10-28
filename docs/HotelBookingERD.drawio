@@ -1,0 +1,296 @@
+<mxfile host="65bd71144e">
+    <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
+        <mxGraphModel dx="4190" dy="2977" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="NJjYvVqlkxv1YHCIG0Jb-1" value="Guest" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-310" y="380" width="170" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="NJjYvVqlkxv1YHCIG0Jb-2" value="+Id&lt;br&gt;+FirstName&lt;br&gt;+LastName&lt;br&gt;+Email&lt;br&gt;+PhoneNumber" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="NJjYvVqlkxv1YHCIG0Jb-1" vertex="1">
+                    <mxGeometry y="50" width="170" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="NJjYvVqlkxv1YHCIG0Jb-3" value="Payment" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-560" y="670" width="150" height="147.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="NJjYvVqlkxv1YHCIG0Jb-4" value="+Id&lt;br&gt;+Date&lt;br&gt;+Amount&lt;br&gt;+Method&lt;br&gt;+&lt;span style=&quot;font-size: 14px; text-align: center;&quot;&gt;ReservationId&lt;/span&gt;" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="NJjYvVqlkxv1YHCIG0Jb-3" vertex="1">
+                    <mxGeometry y="50" width="150" height="97.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="NJjYvVqlkxv1YHCIG0Jb-5" value="Reservation" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-304.5" y="669.5" width="161" height="133" as="geometry"/>
+                </mxCell>
+                <mxCell id="NJjYvVqlkxv1YHCIG0Jb-6" value="+Id&lt;br&gt;+TotalAmount&lt;br&gt;+TotalQuantity&lt;br&gt;+Status&amp;nbsp;&lt;br&gt;+TotalCost&lt;br&gt;+GuestID" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="NJjYvVqlkxv1YHCIG0Jb-5" vertex="1">
+                    <mxGeometry y="30" width="161" height="103" as="geometry"/>
+                </mxCell>
+                <mxCell id="NJjYvVqlkxv1YHCIG0Jb-11" value="Hotel" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="445" width="160" height="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="NJjYvVqlkxv1YHCIG0Jb-12" value="+&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;Id&lt;/span&gt;&lt;br&gt;+Name&lt;br&gt;+E&lt;font&gt;nglishName&lt;/font&gt;&lt;br&gt;+N&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;otes&lt;br&gt;&lt;/span&gt;+D&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;escription&lt;/span&gt;&lt;br&gt;+PhoneNumber&lt;br&gt;+ReviewCount&lt;br&gt;+ReviewScore&lt;br&gt;+WebsiteAddress&lt;br&gt;+CategoryId" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="NJjYvVqlkxv1YHCIG0Jb-11" vertex="1">
+                    <mxGeometry y="30" width="160" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="NJjYvVqlkxv1YHCIG0Jb-14" value="HotelGroup_Facility" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1040" y="340" width="160" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="NJjYvVqlkxv1YHCIG0Jb-15" value="&lt;div&gt;+Id&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;+Name&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+A&lt;/span&gt;&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;vailable&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-size: 14px; text-align: center;&quot;&gt;+FacilityId&lt;/span&gt;&lt;div&gt;&lt;/div&gt;&lt;span style=&quot;font-size: 14px; text-align: center;&quot;&gt;+HotelFacilityGroupId&lt;/span&gt;" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="NJjYvVqlkxv1YHCIG0Jb-14" vertex="1">
+                    <mxGeometry y="50" width="160" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="NJjYvVqlkxv1YHCIG0Jb-22" value="" style="fontSize=12;html=1;endArrow=ERmandOne;startArrow=ERmandOne;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;fontColor=#FFFFFF;" parent="1" source="NJjYvVqlkxv1YHCIG0Jb-4" target="NJjYvVqlkxv1YHCIG0Jb-6" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="660" y="790" as="sourcePoint"/>
+                        <mxPoint x="590" y="740" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="4wO46Uk2gNeV7QwkBnbJ-3" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=-0.009;exitY=0.078;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;fontColor=#FFFFFF;exitPerimeter=0;" parent="1" source="NJjYvVqlkxv1YHCIG0Jb-11" target="4wO46Uk2gNeV7QwkBnbJ-20" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="770" y="330" as="sourcePoint"/>
+                        <mxPoint x="440" y="480" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="4wO46Uk2gNeV7QwkBnbJ-19" value="&lt;code style=&quot;border: 0px solid rgb(217, 217, 227); box-sizing: border-box; --tw-border-spacing-x: 0; --tw-border-spacing-y: 0; --tw-translate-x: 0; --tw-translate-y: 0; --tw-rotate: 0; --tw-skew-x: 0; --tw-skew-y: 0; --tw-scale-x: 1; --tw-scale-y: 1; --tw-pan-x: ; --tw-pan-y: ; --tw-pinch-zoom: ; --tw-scroll-snap-strictness: proximity; --tw-gradient-from-position: ; --tw-gradient-via-position: ; --tw-gradient-to-position: ; --tw-ordinal: ; --tw-slashed-zero: ; --tw-numeric-figure: ; --tw-numeric-spacing: ; --tw-numeric-fraction: ; --tw-ring-inset: ; --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: rgba(69,89,164,.5); --tw-ring-offset-shadow: 0 0 transparent; --tw-ring-shadow: 0 0 transparent; --tw-shadow: 0 0 transparent; --tw-shadow-colored: 0 0 transparent; --tw-blur: ; --tw-brightness: ; --tw-contrast: ; --tw-grayscale: ; --tw-hue-rotate: ; --tw-invert: ; --tw-saturate: ; --tw-sepia: ; --tw-drop-shadow: ; --tw-backdrop-blur: ; --tw-backdrop-brightness: ; --tw-backdrop-contrast: ; --tw-backdrop-grayscale: ; --tw-backdrop-hue-rotate: ; --tw-backdrop-invert: ; --tw-backdrop-opacity: ; --tw-backdrop-saturate: ; --tw-backdrop-sepia: ; font-size: 0.875em; font-family: &amp;quot;Söhne Mono&amp;quot;, Monaco, &amp;quot;Andale Mono&amp;quot;, &amp;quot;Ubuntu Mono&amp;quot;, monospace !important;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;&lt;b&gt;RoomType&lt;/b&gt;&lt;/font&gt;&lt;/code&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-50" y="200" width="190" height="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="4wO46Uk2gNeV7QwkBnbJ-20" value="+Id&lt;br&gt;+Name&lt;br&gt;+P&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;rice&lt;/span&gt;&lt;br&gt;+Description&lt;br&gt;+Status&lt;br&gt;+O&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;rder&lt;/span&gt;&lt;br&gt;+A&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;vailability&lt;br&gt;&lt;/span&gt;+ReviewCount&lt;br&gt;+ReviewScore&lt;br&gt;+HotelId" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="4wO46Uk2gNeV7QwkBnbJ-19" vertex="1">
+                    <mxGeometry y="50" width="190" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="4wO46Uk2gNeV7QwkBnbJ-30" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontColor=#FFFFFF;" parent="1" source="NJjYvVqlkxv1YHCIG0Jb-2" target="NJjYvVqlkxv1YHCIG0Jb-5" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="280" y="470" as="sourcePoint"/>
+                        <mxPoint x="380" y="370" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="tKS9R52SAPH2fbvlaaby-3" value="&lt;code style=&quot;border: 0px solid rgb(217, 217, 227); box-sizing: border-box; --tw-border-spacing-x: 0; --tw-border-spacing-y: 0; --tw-translate-x: 0; --tw-translate-y: 0; --tw-rotate: 0; --tw-skew-x: 0; --tw-skew-y: 0; --tw-scale-x: 1; --tw-scale-y: 1; --tw-pan-x: ; --tw-pan-y: ; --tw-pinch-zoom: ; --tw-scroll-snap-strictness: proximity; --tw-gradient-from-position: ; --tw-gradient-via-position: ; --tw-gradient-to-position: ; --tw-ordinal: ; --tw-slashed-zero: ; --tw-numeric-figure: ; --tw-numeric-spacing: ; --tw-numeric-fraction: ; --tw-ring-inset: ; --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: rgba(69,89,164,.5); --tw-ring-offset-shadow: 0 0 transparent; --tw-ring-shadow: 0 0 transparent; --tw-shadow: 0 0 transparent; --tw-shadow-colored: 0 0 transparent; --tw-blur: ; --tw-brightness: ; --tw-contrast: ; --tw-grayscale: ; --tw-hue-rotate: ; --tw-invert: ; --tw-saturate: ; --tw-sepia: ; --tw-drop-shadow: ; --tw-backdrop-blur: ; --tw-backdrop-brightness: ; --tw-backdrop-contrast: ; --tw-backdrop-grayscale: ; --tw-backdrop-hue-rotate: ; --tw-backdrop-invert: ; --tw-backdrop-opacity: ; --tw-backdrop-saturate: ; --tw-backdrop-sepia: ; font-size: 0.875em; font-family: &amp;quot;Söhne Mono&amp;quot;, Monaco, &amp;quot;Andale Mono&amp;quot;, &amp;quot;Ubuntu Mono&amp;quot;, monospace !important;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;&lt;b&gt;ReservationDetail&lt;/b&gt;&lt;/font&gt;&lt;/code&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-50" y="629.5" width="160" height="200.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="tKS9R52SAPH2fbvlaaby-4" value="+Id&lt;br&gt;+Quantity&lt;br&gt;+Amount&lt;br&gt;+IsReviewed&lt;br&gt;+C&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;heckInDate&lt;/span&gt;&lt;br&gt;+C&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;heckOutDate&lt;br&gt;&lt;/span&gt;+RoomTypeId&lt;br&gt;&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;font-size: 14px; text-align: center;&quot;&gt;ReservationId&lt;/span&gt;&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;&lt;br&gt;&lt;/span&gt;" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="tKS9R52SAPH2fbvlaaby-3" vertex="1">
+                    <mxGeometry y="50" width="160" height="150.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="tKS9R52SAPH2fbvlaaby-6" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontColor=#FFFFFF;" parent="1" source="NJjYvVqlkxv1YHCIG0Jb-6" target="tKS9R52SAPH2fbvlaaby-4" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="460" y="570" as="sourcePoint"/>
+                        <mxPoint x="460" y="480" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="tKS9R52SAPH2fbvlaaby-8" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=0.419;exitY=0.986;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitPerimeter=0;fontColor=#FFFFFF;" parent="1" source="4wO46Uk2gNeV7QwkBnbJ-20" target="tKS9R52SAPH2fbvlaaby-3" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="131" y="660" as="sourcePoint"/>
+                        <mxPoint x="240" y="603" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="2" value="&lt;div style=&quot;background-color: rgb(30, 30, 30); font-size: 12px; line-height: 18px;&quot;&gt;&lt;span style=&quot;&quot;&gt;HotelImage&lt;/span&gt;&lt;/div&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="470" y="250" width="160" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="+Id&lt;br&gt;+Url&lt;br&gt;+HotelId" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="2" vertex="1">
+                    <mxGeometry y="30" width="160" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;fontColor=#FFFFFF;" parent="1" source="NJjYvVqlkxv1YHCIG0Jb-11" target="3" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="590" y="610" as="sourcePoint"/>
+                        <mxPoint x="490" y="670" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="6" value="&lt;span style=&quot;font-size: 12px; background-color: rgb(30, 30, 30);&quot;&gt;Group&lt;/span&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="170" width="160" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="&lt;div&gt;+Id&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;+Name&lt;br&gt;+Type&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;order&lt;/span&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="6" vertex="1">
+                    <mxGeometry y="50" width="160" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="&lt;div style=&quot;font-size: 12px; line-height: 18px;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;HotelGroup&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="765" y="400" width="190" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" style="edgeStyle=none;html=1;fontColor=#FFFFFF;" parent="8" source="9" target="8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+Id&lt;br&gt;+HotelId&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;font-size: 14px; text-align: center;&quot;&gt;Facility&lt;/span&gt;&lt;span style=&quot;text-align: center; background-color: rgb(30, 30, 30);&quot;&gt;Group&lt;/span&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Id&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="8" vertex="1">
+                    <mxGeometry y="50" width="190" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;fontColor=#FFFFFF;" parent="1" source="NJjYvVqlkxv1YHCIG0Jb-12" target="9" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="400" y="570" as="sourcePoint"/>
+                        <mxPoint x="270" y="340" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="13" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=0.438;exitY=1.051;exitDx=0;exitDy=0;exitPerimeter=0;fontColor=#FFFFFF;" parent="1" source="7" target="8" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="891.0799999999999" y="570.8399999999999" as="sourcePoint"/>
+                        <mxPoint x="932.5" y="480" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="17" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.628;exitY=0.994;exitDx=0;exitDy=0;fontColor=#FFFFFF;exitPerimeter=0;" parent="1" source="66" target="NJjYvVqlkxv1YHCIG0Jb-14" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="1240" y="-410" as="sourcePoint"/>
+                        <mxPoint x="1345" y="330" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="21" value="&lt;div style=&quot;background-color: rgb(30, 30, 30); font-size: 12px; line-height: 18px;&quot;&gt;&lt;span style=&quot;&quot;&gt;City&lt;/span&gt;&lt;/div&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="450" y="1050" width="160" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="+Id&lt;br&gt;+Name&lt;br&gt;+P&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;ostalCode&lt;/span&gt;&lt;br&gt;+CountryId&lt;br&gt;+NoOfHotels&lt;br&gt;+Latitude&lt;br&gt;+Longitude&lt;br&gt;+ImageUrl" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="21" vertex="1">
+                    <mxGeometry y="30" width="160" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="&lt;div style=&quot;background-color: rgb(30, 30, 30); line-height: 18px;&quot;&gt;&lt;font&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Area&lt;/span&gt;&lt;/font&gt;&lt;br&gt;&lt;/div&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="710" y="1020" width="160" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" value="+Id&lt;br&gt;+Name&lt;br&gt;+NoOfHotels&lt;br&gt;+Latitude&lt;br&gt;+Longitude&lt;br&gt;+CityId" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="30" vertex="1">
+                    <mxGeometry y="30" width="160" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;fontColor=#FFFFFF;" parent="1" source="22" target="31" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="518.9999999999998" y="1087.5" as="sourcePoint"/>
+                        <mxPoint x="599" y="1095" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="34" value="&lt;div style=&quot;background-color: rgb(30, 30, 30); line-height: 18px;&quot;&gt;&lt;font&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Address&lt;/span&gt;&lt;/font&gt;&lt;br&gt;&lt;/div&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="740" width="150" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" value="+Id&lt;br&gt;+HotelId&lt;br&gt;+CountryId&lt;br&gt;+CityId&lt;br&gt;+AreaId&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;&lt;br&gt;&lt;/span&gt;" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="34" vertex="1">
+                    <mxGeometry y="30" width="150" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="" style="fontSize=12;html=1;endArrow=ERmandOne;startArrow=ERmandOne;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fontColor=#FFFFFF;" parent="1" source="34" target="NJjYvVqlkxv1YHCIG0Jb-12" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="200" y="854.2857142857144" as="sourcePoint"/>
+                        <mxPoint x="320" y="755.7142857142858" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="40" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=0.394;exitY=0.01;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitPerimeter=0;fontColor=#FFFFFF;" parent="1" source="21" target="35" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="335.4399999999998" y="1067.3400000000001" as="sourcePoint"/>
+                        <mxPoint x="460.25" y="940" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="41" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=0.326;exitY=0.005;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitPerimeter=0;fontColor=#FFFFFF;" parent="1" source="30" target="35" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="642.0400000000004" y="1051.4" as="sourcePoint"/>
+                        <mxPoint x="499" y="940" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="58" value="&lt;div style=&quot;background-color: rgb(30, 30, 30); line-height: 18px;&quot;&gt;&lt;div style=&quot;font-size: 12px; line-height: 18px;&quot;&gt;&lt;span style=&quot;&quot;&gt;Review&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="662.25" width="160" height="135" as="geometry">
+                        <mxRectangle x="200" y="662.25" width="80" height="30" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="59" value="+Id&lt;br&gt;+&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;Title&lt;/span&gt;&lt;br&gt;+R&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;ating&lt;br&gt;&lt;/span&gt;+&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;Comment&lt;/span&gt;&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;&lt;br&gt;+R&lt;/span&gt;&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;eviewDate&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;font-family: &amp;quot;Söhne Mono&amp;quot;, Monaco, &amp;quot;Andale Mono&amp;quot;, &amp;quot;Ubuntu Mono&amp;quot;, monospace; font-size: 12.25px; text-align: center;&quot;&gt;&lt;b&gt;ReservationDetailId&lt;/b&gt;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;&lt;br&gt;&lt;/span&gt;" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="58" vertex="1">
+                    <mxGeometry y="30" width="160" height="105" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="" style="fontSize=12;html=1;endArrow=ERmandOne;startArrow=ERmandOne;rounded=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;fontColor=#FFFFFF;" parent="1" source="59" target="tKS9R52SAPH2fbvlaaby-4" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="480" y="822.7659574468087" as="sourcePoint"/>
+                        <mxPoint x="790" y="717.2340425531913" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="65" value="Facility" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1020" y="-10" width="160" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="66" value="&lt;div&gt;+Id&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;+Name&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;+S&lt;/span&gt;&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;ymbol&lt;/span&gt;&lt;/div&gt;" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="65" vertex="1">
+                    <mxGeometry y="50" width="160" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0;exitDx=0;exitDy=0;fontColor=#FFFFFF;" parent="1" source="9" target="NJjYvVqlkxv1YHCIG0Jb-15" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="1346.6666666666665" y="320" as="sourcePoint"/>
+                        <mxPoint x="1460" y="199.9999999999999" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="69" value="&lt;b style=&quot;font-family: &amp;quot;Söhne Mono&amp;quot;, Monaco, &amp;quot;Andale Mono&amp;quot;, &amp;quot;Ubuntu Mono&amp;quot;, monospace; font-size: 12.25px;&quot;&gt;RoomType&lt;/b&gt;&lt;span style=&quot;background-color: rgb(30, 30, 30); font-size: 12px;&quot;&gt;Image&lt;/span&gt;&lt;span style=&quot;font-family: &amp;quot;Söhne Mono&amp;quot;, Monaco, &amp;quot;Andale Mono&amp;quot;, &amp;quot;Ubuntu Mono&amp;quot;, monospace; font-size: 12.25px;&quot;&gt;&lt;br&gt;&lt;/span&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-35" y="-30" width="160" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" value="+Id&lt;br&gt;+Url&lt;br&gt;+&lt;b style=&quot;text-align: center; font-family: &amp;quot;Söhne Mono&amp;quot;, Monaco, &amp;quot;Andale Mono&amp;quot;, &amp;quot;Ubuntu Mono&amp;quot;, monospace; font-size: 12.25px;&quot;&gt;RoomType&lt;/b&gt;Id" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="69" vertex="1">
+                    <mxGeometry y="30" width="160" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="71" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontColor=#FFFFFF;" parent="1" source="4wO46Uk2gNeV7QwkBnbJ-19" target="70" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="460" y="-103" as="sourcePoint"/>
+                        <mxPoint x="10" y="-68" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="75" value="&lt;div style=&quot;background-color: rgb(30, 30, 30); font-size: 12px; line-height: 18px;&quot;&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(42, 37, 47);&quot;&gt;RoomTypeGroup&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="180" width="190" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="76" style="edgeStyle=none;html=1;fontColor=#FFFFFF;" parent="75" source="77" target="75" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="77" value="&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+Id&lt;br&gt;+&lt;/span&gt;&lt;b style=&quot;font-family: &amp;quot;Söhne Mono&amp;quot;, Monaco, &amp;quot;Andale Mono&amp;quot;, &amp;quot;Ubuntu Mono&amp;quot;, monospace; font-size: 12.25px; text-align: center;&quot;&gt;RoomType&lt;/b&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Id&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;+&lt;span style=&quot;font-size: 14px; text-align: center;&quot;&gt;Facility&lt;/span&gt;&lt;span style=&quot;text-align: center; background-color: rgb(30, 30, 30);&quot;&gt;Group&lt;/span&gt;Id&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="75" vertex="1">
+                    <mxGeometry y="50" width="190" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="78" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;fontColor=#FFFFFF;" parent="1" source="4wO46Uk2gNeV7QwkBnbJ-20" target="77" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="896.0799999999999" y="571.2600000000002" as="sourcePoint"/>
+                        <mxPoint x="907.5" y="330" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="79" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;fontColor=#FFFFFF;" parent="1" source="7" target="77" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="980.0799999999999" y="-46.429999999999836" as="sourcePoint"/>
+                        <mxPoint x="1044.9466990520527" y="180" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="80" value="RoomTypeGroup_Facility" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="210" y="-50" width="220" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="81" value="&lt;div&gt;+Id&lt;/div&gt;&lt;div&gt;+Name&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+A&lt;/span&gt;&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;vailable&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-size: 14px; text-align: center;&quot;&gt;+FacilityId&lt;/span&gt;&lt;div&gt;&lt;/div&gt;&lt;span style=&quot;font-size: 14px; text-align: center;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;font-size: 14px; text-align: center;&quot;&gt;RoomTypeFacilityGroup&lt;/span&gt;&lt;span style=&quot;font-size: 14px; text-align: center;&quot;&gt;Id&lt;/span&gt;" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="80" vertex="1">
+                    <mxGeometry y="50" width="220" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="82" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;fontColor=#FFFFFF;" parent="1" source="65" target="81" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="1244.6153846153848" y="-200" as="sourcePoint"/>
+                        <mxPoint x="1160" y="-400" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="83" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.344;exitY=-0.012;exitDx=0;exitDy=0;exitPerimeter=0;fontColor=#FFFFFF;" parent="1" source="75" target="81" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="1160" y="230" as="sourcePoint"/>
+                        <mxPoint x="1270" y="-80" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="84" value="&lt;div style=&quot;background-color: rgb(30, 30, 30); font-size: 12px; line-height: 18px;&quot;&gt;&lt;span style=&quot;&quot;&gt;Country&lt;/span&gt;&lt;/div&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="1060" width="160" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="85" value="+Id&lt;br&gt;+Name&lt;br&gt;+ISO2&lt;br&gt;+Latitude&lt;br&gt;+Longitude&lt;br&gt;+ImageUrl" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="84" vertex="1">
+                    <mxGeometry y="30" width="160" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="86" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;fontColor=#FFFFFF;" parent="1" source="84" target="22" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="500" y="1117.5" as="sourcePoint"/>
+                        <mxPoint x="660" y="1122.5" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="87" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;fontColor=#FFFFFF;" parent="1" source="84" target="35" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="245" y="1127.8431372549016" as="sourcePoint"/>
+                        <mxPoint x="340" y="1137.156862745098" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="94" value="&lt;div style=&quot;background-color: rgb(30, 30, 30); font-size: 12px; line-height: 18px;&quot;&gt;HotelFacilityHighlight&lt;/div&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1230" y="580" width="160" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="95" value="&lt;div&gt;+Id&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;+Name&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+A&lt;/span&gt;&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;vailable&lt;/span&gt;&lt;/div&gt;" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="94" vertex="1">
+                    <mxGeometry y="50" width="160" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="96" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;fontColor=#FFFFFF;" parent="1" source="NJjYvVqlkxv1YHCIG0Jb-12" target="94" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="600" y="530" as="sourcePoint"/>
+                        <mxPoint x="790" y="527.5" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="97" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;exitX=0.75;exitY=1;exitDx=0;exitDy=0;fontColor=#FFFFFF;" parent="1" source="66" target="94" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="1130.48" y="149.57999999999993" as="sourcePoint"/>
+                        <mxPoint x="1130" y="370" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="98" value="&lt;div style=&quot;background-color: rgb(30, 30, 30); line-height: 18px;&quot;&gt;&lt;div style=&quot;font-size: 12px; line-height: 18px;&quot;&gt;&lt;span style=&quot;&quot;&gt;Category&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="662.25" width="160" height="135" as="geometry">
+                        <mxRectangle x="200" y="662.25" width="80" height="30" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="99" value="+Id&lt;br&gt;+&lt;span style=&quot;background-color: rgb(30, 30, 30);&quot;&gt;Name&lt;br&gt;&lt;/span&gt;" style="align=left;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="98" vertex="1">
+                    <mxGeometry y="30" width="160" height="105" as="geometry"/>
+                </mxCell>
+                <mxCell id="100" value="" style="fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;fontColor=#FFFFFF;" parent="1" source="99" target="NJjYvVqlkxv1YHCIG0Jb-11" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="600" y="620" as="sourcePoint"/>
+                        <mxPoint x="1240" y="620" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

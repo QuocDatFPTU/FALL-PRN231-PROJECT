@@ -22,27 +22,72 @@ namespace HotelBooking.Infrastructure.Migrations
                 .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("HotelBooking.Domain.Entities.Amenity", b =>
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                    b.Property<int>("AreaId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Description")
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HotelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AreaId");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("HotelId")
+                        .IsUnique();
+
+                    b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Area", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("double");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("double");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTimeOffset?>("ModifiedAt")
-                        .HasColumnType("datetime(6)");
+                    b.Property<int>("NoOfHotels")
+                        .HasColumnType("int");
 
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("Areas");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -50,7 +95,98 @@ namespace HotelBooking.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Amenities");
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("double");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("double");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("NoOfHotels")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Iso2")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("double");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("double");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Facility", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Facilities");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Group", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("HotelBooking.Domain.Entities.Guest", b =>
@@ -58,18 +194,6 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -95,12 +219,7 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ZipCode")
-                        .IsRequired()
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -114,17 +233,8 @@ namespace HotelBooking.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -132,8 +242,7 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
+                    b.Property<string>("Description")
                         .HasColumnType("longtext");
 
                     b.Property<DateTimeOffset?>("ModifiedAt")
@@ -149,27 +258,112 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Rating")
-                        .HasColumnType("longtext");
+                    b.Property<int>("ReviewCount")
+                        .HasColumnType("int");
 
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("ReviewRating")
+                        .HasColumnType("int");
 
                     b.Property<string>("WebsiteAddress")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Zip")
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Hotels");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.HotelFacilityHighlight", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Available")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("FacilityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HotelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacilityId");
+
+                    b.HasIndex("HotelId");
+
+                    b.ToTable("HotelFacilityHighlights");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.HotelGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HotelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("HotelId");
+
+                    b.ToTable("HotelGroups");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.HotelGroupFacility", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Available")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("FacilityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HotelGroupId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacilityId");
+
+                    b.HasIndex("HotelGroupId");
+
+                    b.ToTable("HotelGroupFacilities");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.HotelImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("HotelId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Hotels");
+                    b.HasIndex("HotelId");
+
+                    b.ToTable("HotelImages");
                 });
 
             modelBuilder.Entity("HotelBooking.Domain.Entities.Payment", b =>
@@ -178,8 +372,8 @@ namespace HotelBooking.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(65,30)");
+                    b.Property<double>("Amount")
+                        .HasColumnType("double");
 
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -187,22 +381,13 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Method")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTimeOffset?>("ModifiedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("PaymentDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("PaymentMethod")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("PaymentStatus")
                         .HasColumnType("longtext");
 
                     b.Property<int>("ReservationId")
@@ -231,29 +416,17 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Property<int>("GuestId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("HasAllInclusive")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("HasBreakfast")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("HasPaid")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<DateTimeOffset?>("ModifiedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Notes")
-                        .HasColumnType("longtext");
+                    b.Property<double>("TotalCost")
+                        .HasColumnType("double");
 
-                    b.Property<int>("NumberOfGuests")
+                    b.Property<int>("TotalQuantity")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("TotalCost")
-                        .HasColumnType("decimal(65,30)");
 
                     b.HasKey("Id");
 
@@ -280,11 +453,20 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("longtext");
 
+                    b.Property<bool>("IsReviewed")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<DateTimeOffset?>("ModifiedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("longtext");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<int>("ReservationId")
                         .HasColumnType("int");
@@ -301,10 +483,53 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.ToTable("ReservationDetails");
                 });
 
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTimeOffset?>("ModifiedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReservationDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReservationDetailId")
+                        .IsUnique();
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("HotelBooking.Domain.Entities.RoomType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("Availability")
                         .HasColumnType("int");
 
                     b.Property<DateTimeOffset?>("CreatedAt")
@@ -330,21 +555,221 @@ namespace HotelBooking.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Price")
+                    b.Property<double>("Price")
+                        .HasColumnType("double");
+
+                    b.Property<int>("ReviewCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int>("ReviewRating")
                         .HasColumnType("int");
-
-                    b.Property<string>("RoomTypeStatus")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
                     b.HasIndex("HotelId");
 
                     b.ToTable("RoomTypes");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.RoomTypeGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("RoomTypeId");
+
+                    b.ToTable("RoomTypeGroups");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.RoomTypeGroupFacility", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Available")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("FacilityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomTypeGroupId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacilityId");
+
+                    b.HasIndex("RoomTypeGroupId");
+
+                    b.ToTable("RoomTypeGroupFacilities");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.RoomTypeImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("RoomTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomTypeId");
+
+                    b.ToTable("RoomTypeImages");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Address", b =>
+                {
+                    b.HasOne("HotelBooking.Domain.Entities.Area", "Area")
+                        .WithMany("Addresss")
+                        .HasForeignKey("AreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HotelBooking.Domain.Entities.City", "City")
+                        .WithMany("Addresss")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HotelBooking.Domain.Entities.Country", "Country")
+                        .WithMany("Addresss")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HotelBooking.Domain.Entities.Hotel", "Hotel")
+                        .WithOne("Address")
+                        .HasForeignKey("HotelBooking.Domain.Entities.Address", "HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Area");
+
+                    b.Navigation("City");
+
+                    b.Navigation("Country");
+
+                    b.Navigation("Hotel");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Area", b =>
+                {
+                    b.HasOne("HotelBooking.Domain.Entities.City", "City")
+                        .WithMany("Areas")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.City", b =>
+                {
+                    b.HasOne("HotelBooking.Domain.Entities.Country", "Country")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Hotel", b =>
+                {
+                    b.HasOne("HotelBooking.Domain.Entities.Category", "Category")
+                        .WithMany("Hotels")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.HotelFacilityHighlight", b =>
+                {
+                    b.HasOne("HotelBooking.Domain.Entities.Facility", "Facility")
+                        .WithMany("HotelFacilityHighlights")
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HotelBooking.Domain.Entities.Hotel", "Hotel")
+                        .WithMany("HotelFacilityHighlights")
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Facility");
+
+                    b.Navigation("Hotel");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.HotelGroup", b =>
+                {
+                    b.HasOne("HotelBooking.Domain.Entities.Group", "Group")
+                        .WithMany("HotelGroups")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HotelBooking.Domain.Entities.Hotel", "Hotel")
+                        .WithMany("HotelGroups")
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Hotel");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.HotelGroupFacility", b =>
+                {
+                    b.HasOne("HotelBooking.Domain.Entities.Facility", "Facility")
+                        .WithMany("HotelGroupFacilities")
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HotelBooking.Domain.Entities.HotelGroup", "HotelGroup")
+                        .WithMany("HotelGroupFacilities")
+                        .HasForeignKey("HotelGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Facility");
+
+                    b.Navigation("HotelGroup");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.HotelImage", b =>
+                {
+                    b.HasOne("HotelBooking.Domain.Entities.Hotel", "Hotel")
+                        .WithMany("HotelImages")
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Hotel");
                 });
 
             modelBuilder.Entity("HotelBooking.Domain.Entities.Payment", b =>
@@ -388,6 +813,17 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Navigation("RoomType");
                 });
 
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Review", b =>
+                {
+                    b.HasOne("HotelBooking.Domain.Entities.ReservationDetail", "ReservationDetail")
+                        .WithOne("Review")
+                        .HasForeignKey("HotelBooking.Domain.Entities.Review", "ReservationDetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ReservationDetail");
+                });
+
             modelBuilder.Entity("HotelBooking.Domain.Entities.RoomType", b =>
                 {
                     b.HasOne("HotelBooking.Domain.Entities.Hotel", "Hotel")
@@ -399,6 +835,95 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Navigation("Hotel");
                 });
 
+            modelBuilder.Entity("HotelBooking.Domain.Entities.RoomTypeGroup", b =>
+                {
+                    b.HasOne("HotelBooking.Domain.Entities.Group", "Group")
+                        .WithMany("RoomTypeGroups")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HotelBooking.Domain.Entities.RoomType", "RoomType")
+                        .WithMany("RoomTypeGroups")
+                        .HasForeignKey("RoomTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("RoomType");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.RoomTypeGroupFacility", b =>
+                {
+                    b.HasOne("HotelBooking.Domain.Entities.Facility", "Facility")
+                        .WithMany("RoomTypeGroupFacilities")
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HotelBooking.Domain.Entities.RoomTypeGroup", "RoomTypeGroup")
+                        .WithMany("RoomTypeGroupFacilities")
+                        .HasForeignKey("RoomTypeGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Facility");
+
+                    b.Navigation("RoomTypeGroup");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.RoomTypeImage", b =>
+                {
+                    b.HasOne("HotelBooking.Domain.Entities.RoomType", "RoomType")
+                        .WithMany("RoomTypeImages")
+                        .HasForeignKey("RoomTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RoomType");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Area", b =>
+                {
+                    b.Navigation("Addresss");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("Hotels");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.City", b =>
+                {
+                    b.Navigation("Addresss");
+
+                    b.Navigation("Areas");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Country", b =>
+                {
+                    b.Navigation("Addresss");
+
+                    b.Navigation("Cities");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Facility", b =>
+                {
+                    b.Navigation("HotelFacilityHighlights");
+
+                    b.Navigation("HotelGroupFacilities");
+
+                    b.Navigation("RoomTypeGroupFacilities");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Group", b =>
+                {
+                    b.Navigation("HotelGroups");
+
+                    b.Navigation("RoomTypeGroups");
+                });
+
             modelBuilder.Entity("HotelBooking.Domain.Entities.Guest", b =>
                 {
                     b.Navigation("Reservations");
@@ -406,7 +931,21 @@ namespace HotelBooking.Infrastructure.Migrations
 
             modelBuilder.Entity("HotelBooking.Domain.Entities.Hotel", b =>
                 {
+                    b.Navigation("Address")
+                        .IsRequired();
+
+                    b.Navigation("HotelFacilityHighlights");
+
+                    b.Navigation("HotelGroups");
+
+                    b.Navigation("HotelImages");
+
                     b.Navigation("RoomTypes");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.HotelGroup", b =>
+                {
+                    b.Navigation("HotelGroupFacilities");
                 });
 
             modelBuilder.Entity("HotelBooking.Domain.Entities.Reservation", b =>
@@ -417,9 +956,24 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Navigation("ReservationDetails");
                 });
 
+            modelBuilder.Entity("HotelBooking.Domain.Entities.ReservationDetail", b =>
+                {
+                    b.Navigation("Review")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HotelBooking.Domain.Entities.RoomType", b =>
                 {
                     b.Navigation("ReservationDetails");
+
+                    b.Navigation("RoomTypeGroups");
+
+                    b.Navigation("RoomTypeImages");
+                });
+
+            modelBuilder.Entity("HotelBooking.Domain.Entities.RoomTypeGroup", b =>
+                {
+                    b.Navigation("RoomTypeGroupFacilities");
                 });
 #pragma warning restore 612, 618
         }

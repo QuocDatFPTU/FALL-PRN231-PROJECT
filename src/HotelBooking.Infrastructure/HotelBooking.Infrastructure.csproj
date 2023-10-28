@@ -9,7 +9,6 @@
 	<ItemGroup>
 		<PackageReference Include="Bogus" Version="34.0.2" />
 		<PackageReference Include="AutoBogus" Version="2.13.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.11" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.11" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.11" />
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
@@ -17,12 +16,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\HotelBooking.Application\HotelBooking.Application.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Data\Configurations\" />
-		<Folder Include="Services\" />
-		<Folder Include="Repositories\" />
 	</ItemGroup>
 
 </Project>
