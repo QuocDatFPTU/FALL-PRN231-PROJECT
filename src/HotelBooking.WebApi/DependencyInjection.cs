@@ -1,11 +1,19 @@
 ﻿using HotelBooking.Application.Common.Exceptions;
 using HotelBooking.Infrastructure;
+using HotelBooking.WebApi.Extensions;
+using HotelBooking.WebApi.Transformers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using System.Net.Mime;
 using System.Reflection;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -19,22 +27,20 @@ public static class DependencyInjection
         services.AddEndpointsApiExplorer();
         services.AddControllerServices();
         services.AddSwaggerServices();
-        services.AddUrlHelperServices();
+        services.AddAuthenticationServices(configuration);
 
-    }
-
-    private static void AddUrlHelperServices(this IServiceCollection services)
-    {
-        services.AddSingleton<IActionContextAccessor, ActionContextAccessor>()
-                .AddScoped((it) =>
-                    it.GetRequiredService<IUrlHelperFactory>().GetUrlHelper(it.GetRequiredService<IActionContextAccessor>().ActionContext!));
     }
 
     private static void AddControllerServices(this IServiceCollection services)
     {
-        services.AddControllers().AddJsonOptions(options =>
+        services.AddControllers(options =>
+        {
+            options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
+            options.ModelMetadataDetailsProviders.Add(new SystemTextJsonValidationMetadataProvider());
+        }).AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
         });
     }
 
@@ -44,6 +50,37 @@ public static class DependencyInjection
         {
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new()
+            {
+                Description = "JWT Authorization header using the Bearer scheme.",
+                Type = SecuritySchemeType.Http,
+                Scheme = JwtBearerDefaults.AuthenticationScheme
+            });
+            c.OperationFilter<SecurityRequirementsOperationFilter>(JwtBearerDefaults.AuthenticationScheme);
+            c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+        });
+    }
+
+    private static void AddAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+        }).AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                     configuration.GetSection("Authentication:Schemes:Bearer:SerectKey").Value!)),
+                ValidateIssuerSigningKey = true,
+                ClockSkew = TimeSpan.Zero,
+                ValidateIssuer = false,
+                ValidateAudience = false,
+            };
+            options.RequireHttpsMetadata = false;
+            options.HandleEvents();
         });
     }
 
@@ -70,6 +107,7 @@ public static class DependencyInjection
 
         app.UseHttpsRedirection();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();
@@ -105,9 +143,6 @@ public static class DependencyInjection
                         break;
                     case UnauthorizedAccessException e:
                         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                        break;
-                    case AppException e:
-                        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                         break;
                     default:
                         context.Response.StatusCode = StatusCodes.Status500InternalServerError;

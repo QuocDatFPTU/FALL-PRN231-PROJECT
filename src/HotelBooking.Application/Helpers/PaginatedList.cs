@@ -29,3 +29,10 @@ public class PaginatedList<T> : List<T> where T : class
         return new PaginatedList<T>(items, count, pageIndex, pageSize);
     }
 }
+
+public static class PaginatedListExtensions
+{
+    public static Task<PaginatedList<TDestination>> PaginatedListAsync<TDestination>(
+        this IQueryable<TDestination> queryable, int pageIndex, int pageSize) where TDestination : class
+      => PaginatedList<TDestination>.CreateAsync(queryable.AsNoTracking(), pageIndex, pageSize);
+}

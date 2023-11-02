@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace HotelBooking.Application.Extensions;
+namespace HotelBooking.Application.Helpers;
 public class CamelCasePropertyNameResolver
 {
     public static string ResolvePropertyName(Type type, MemberInfo memberInfo, LambdaExpression expression)
