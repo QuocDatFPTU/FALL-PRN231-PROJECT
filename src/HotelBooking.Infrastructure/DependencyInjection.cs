@@ -35,6 +35,7 @@ public static class DependencyInjection
             .AddScoped<ICurrentUserService, CurrentUserService>()
             .AddScoped<IAuthService, AuthService>()
             .AddScoped<IUserService, UserService>()
+            .AddScoped<ICityService, CityService>()
             .AddTransient<IEmailSender, EmailSender>();
     }
 
