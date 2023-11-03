@@ -25,4 +25,13 @@ public static class UtilitiesExtensions
         }
         return true;
     }
+
+    public static int ConvertToInteger(this string @this)
+    {
+        if (!int.TryParse(@this, out var result))
+        {
+            throw new ArgumentException("The string is not a valid integer", @this);
+        }
+        return result;
+    }
 }

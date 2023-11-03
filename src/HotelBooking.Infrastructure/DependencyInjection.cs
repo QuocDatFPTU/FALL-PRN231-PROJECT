@@ -34,6 +34,7 @@ public static class DependencyInjection
             .AddScoped<TokenHelper<Guest>>()
             .AddScoped<ICurrentUserService, CurrentUserService>()
             .AddScoped<IAuthService, AuthService>()
+            .AddScoped<IUserService, UserService>()
             .AddTransient<IEmailSender, EmailSender>();
     }
 
