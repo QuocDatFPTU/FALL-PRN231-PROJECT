@@ -1,4 +1,5 @@
-﻿using HotelBooking.Domain.Common;
+﻿using HotelBooking.Application.Interfaces.Services;
+using HotelBooking.Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -7,6 +8,13 @@ namespace HotelBooking.Infrastructure.Data.Interceptors;
 
 public class AuditableEntityInterceptor : SaveChangesInterceptor
 {
+    private readonly ICurrentUserService _currentUserService;
+
+    public AuditableEntityInterceptor(
+        ICurrentUserService currentUserService)
+    {
+        _currentUserService = currentUserService;
+    }
 
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
@@ -28,13 +36,13 @@ public class AuditableEntityInterceptor : SaveChangesInterceptor
         {
             if (entry.State == EntityState.Added)
             {
-                entry.Entity.CreatedBy = "Anonymous";
+                entry.Entity.CreatedBy = _currentUserService.Id;
                 entry.Entity.CreatedAt = DateTimeOffset.UtcNow;
             }
 
             if (entry.State == EntityState.Added || entry.State == EntityState.Modified || entry.HasChangedOwnedEntities())
             {
-                entry.Entity.ModifiedBy = "Anonymous";
+                entry.Entity.ModifiedBy = _currentUserService.Id;
                 entry.Entity.ModifiedAt = DateTimeOffset.UtcNow;
             }
         }

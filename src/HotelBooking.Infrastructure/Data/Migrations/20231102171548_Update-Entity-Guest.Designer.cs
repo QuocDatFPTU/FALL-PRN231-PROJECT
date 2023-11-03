@@ -3,6 +3,7 @@ using System;
 using HotelBooking.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBooking.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231102171548_Update-Entity-Guest")]
+    partial class UpdateEntityGuest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -205,12 +208,15 @@ namespace HotelBooking.Infrastructure.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTimeOffset?>("ModifiedAt")

@@ -1,5 +1,7 @@
-﻿using HotelBooking.Application.Interfaces.Repositories;
+﻿using HotelBooking.Application.Helpers;
+using HotelBooking.Application.Interfaces.Repositories;
 using HotelBooking.Application.Interfaces.Services;
+using HotelBooking.Domain.Entities;
 using HotelBooking.Infrastructure.Data;
 using HotelBooking.Infrastructure.Data.Interceptors;
 using HotelBooking.Infrastructure.Data.SeedData;
@@ -29,6 +31,9 @@ public static class DependencyInjection
     private static void AddServices(this IServiceCollection services)
     {
         services
+            .AddScoped<TokenHelper<Guest>>()
+            .AddScoped<ICurrentUserService, CurrentUserService>()
+            .AddScoped<IAuthService, AuthService>()
             .AddTransient<IEmailSender, EmailSender>();
     }
 

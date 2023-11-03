@@ -1,6 +1,5 @@
 ﻿using HotelBooking.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 namespace HotelBooking.Infrastructure.Data
 {
@@ -31,11 +30,5 @@ namespace HotelBooking.Infrastructure.Data
         public virtual DbSet<RoomTypeGroup> RoomTypeGroups { get; set; }
         public virtual DbSet<RoomTypeGroupFacility> RoomTypeGroupFacilities { get; set; }
         public virtual DbSet<RoomTypeImage> RoomTypeImages { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        }
-
     }
 }
