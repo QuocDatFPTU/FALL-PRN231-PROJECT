@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HotelBooking.Application.Common.Exceptions;
 using HotelBooking.Application.DTOs.Hotels;
 using HotelBooking.Application.Helpers;
 using HotelBooking.Application.Interfaces.Repositories;
@@ -24,6 +25,11 @@ public class HotelService : IHotelService
         var checkOutDate = request.SearchCriteria.CheckoutDate;
         var pageIndex = request.Page.PageIndex;
         var pageSize = request.Page.PageSize;
+
+        if (!await _unitOfWork.Repository<City>().ExistsByAsync(_ => _.Id == request.CityId))
+        {
+            throw new NotFoundException(nameof(City), request.CityId);
+        }
 
         var hotelIQ = await _unitOfWork.Repository<Hotel>()
                     .FindToIQueryableAsync(
