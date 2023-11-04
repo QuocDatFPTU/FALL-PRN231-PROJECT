@@ -22,10 +22,19 @@ public class CitiesController : ControllerBase
         return Ok(await _cityService.GetTopDestinationsAsync(limit));
     }
 
+    /// <param name="id">19</param>
     /// <param name="limit">default 10</param>
     [HttpGet("{id}/place-recommendations")]
     public async Task<ActionResult<PaginatedList<AreaRecommendationResponse>>> GetPlaceRecommendations(int id, int limit)
     {
         return Ok(await _cityService.GetPlaceRecommendationsAsync(id, limit));
+    }
+
+    /// <param name="searchText">ho</param>
+    /// <param name="limit">default 10</param>
+    [HttpGet("unified-suggest-result")]
+    public async Task<ActionResult<PaginatedList<CityResponse>>> GetUnifiedSuggestResult(string searchText, int limit)
+    {
+        return Ok(await _cityService.GetUnifiedSuggestResultAsync(searchText, limit));
     }
 }

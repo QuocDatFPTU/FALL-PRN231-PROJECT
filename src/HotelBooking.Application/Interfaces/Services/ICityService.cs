@@ -7,4 +7,5 @@ public interface ICityService
 {
     Task<PaginatedList<CityResponse>> GetTopDestinationsAsync(int limit);
     Task<PaginatedList<AreaRecommendationResponse>> GetPlaceRecommendationsAsync(int cityId, int limit);
+    Task<PaginatedList<CityResponse>> GetUnifiedSuggestResultAsync(string searchText, int limit);
 }
