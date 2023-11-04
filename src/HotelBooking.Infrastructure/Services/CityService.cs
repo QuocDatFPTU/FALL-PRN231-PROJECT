@@ -5,6 +5,7 @@ using HotelBooking.Application.Helpers;
 using HotelBooking.Application.Interfaces.Repositories;
 using HotelBooking.Application.Interfaces.Services;
 using HotelBooking.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelBooking.Infrastructure.Services;
 public class CityService : ICityService
@@ -33,4 +34,10 @@ public class CityService : ICityService
         return paginatedAreas;
     }
 
+    public async Task<PaginatedList<CityResponse>> GetUnifiedSuggestResultAsync(string searchText, int limit)
+    {
+        var cityIQ = await _unitOfWork.Repository<City>().FindToIQueryableAsync(_ => EF.Functions.Like(_.Name, $"%{searchText}%"));
+        var paginatedCities = await _mapper.ProjectTo<CityResponse>(cityIQ).PaginatedListAsync(1, limit);
+        return paginatedCities;
+    }
 }
