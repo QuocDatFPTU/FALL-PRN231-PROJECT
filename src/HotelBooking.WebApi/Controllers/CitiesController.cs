@@ -1,4 +1,5 @@
-﻿using HotelBooking.Application.DTOs.Cities;
+﻿using HotelBooking.Application.DTOs.Areas;
+using HotelBooking.Application.DTOs.Cities;
 using HotelBooking.Application.Helpers;
 using HotelBooking.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -19,5 +20,12 @@ public class CitiesController : ControllerBase
     public async Task<ActionResult<PaginatedList<CityResponse>>> GetTopDestinations(int limit)
     {
         return Ok(await _cityService.GetTopDestinationsAsync(limit));
+    }
+
+    /// <param name="limit">default 10</param>
+    [HttpGet("{id}/place-recommendations")]
+    public async Task<ActionResult<PaginatedList<AreaRecommendationResponse>>> GetPlaceRecommendations(int id, int limit)
+    {
+        return Ok(await _cityService.GetPlaceRecommendationsAsync(id, limit));
     }
 }

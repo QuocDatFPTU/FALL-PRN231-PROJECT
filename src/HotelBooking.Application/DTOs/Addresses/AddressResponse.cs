@@ -1,4 +1,5 @@
 ﻿using HotelBooking.Application.Common.Mappings;
+using HotelBooking.Application.DTOs.Areas;
 using HotelBooking.Application.DTOs.Cities;
 using HotelBooking.Domain.Entities;
 

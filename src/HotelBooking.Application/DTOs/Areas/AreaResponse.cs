@@ -2,7 +2,7 @@
 using HotelBooking.Domain.Common;
 using HotelBooking.Domain.Entities;
 
-namespace HotelBooking.Application.DTOs.Addresses;
+namespace HotelBooking.Application.DTOs.Areas;
 public class AreaResponse : BaseEntity, IMapFrom<Area>
 {
     public string Name { get; set; } = default!;

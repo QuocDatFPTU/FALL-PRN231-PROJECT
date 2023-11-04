@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HotelBooking.Application.DTOs.Areas;
 using HotelBooking.Application.DTOs.Cities;
 using HotelBooking.Application.Helpers;
 using HotelBooking.Application.Interfaces.Repositories;
@@ -23,4 +24,13 @@ public class CityService : ICityService
         var paginatedCities = await _mapper.ProjectTo<CityResponse>(cityIQ).PaginatedListAsync(1, limit);
         return paginatedCities;
     }
+
+    public async Task<PaginatedList<AreaRecommendationResponse>> GetPlaceRecommendationsAsync(int cityId, int limit)
+    {
+        var areaIQ = await _unitOfWork.Repository<Area>()
+            .FindToIQueryableAsync(_ => _.CityId == cityId && _.NoOfHotels > 0, orderBy: _ => _.OrderByDescending(_ => _.NoOfHotels));
+        var paginatedAreas = await _mapper.ProjectTo<AreaRecommendationResponse>(areaIQ).PaginatedListAsync(1, limit);
+        return paginatedAreas;
+    }
+
 }
