@@ -25,7 +25,10 @@ public static class DependencyInjection
         services.AddFluentValidationRulesToSwagger();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         ValidatorOptions.Global.PropertyNameResolver = CamelCasePropertyNameResolver.ResolvePropertyName;
-        services.AddFluentValidationAutoValidation();
+        services.AddFluentValidationAutoValidation(config =>
+        {
+            config.ImplicitlyValidateChildProperties = true;
+        });
     }
 
 }
