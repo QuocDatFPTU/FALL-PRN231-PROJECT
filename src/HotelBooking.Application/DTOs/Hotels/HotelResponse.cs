@@ -7,6 +7,8 @@ namespace HotelBooking.Application.DTOs.Hotels;
 public class HotelResponse : BaseAuditableEntity, IMapFrom<Hotel>
 {
     public string Name { get; set; } = default!;
+    public bool IsSoldOut { get; set; }
+    public double? PricePerNight { get; set; }
     public string? Description { get; set; }
     public string? PhoneNumber { get; set; }
     public string? Notes { get; set; }
