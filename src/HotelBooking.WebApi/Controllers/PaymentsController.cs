@@ -17,8 +17,7 @@ public class PaymentsController : ControllerBase
     public IActionResult CreatePaymentUrl([FromQuery] PaymentInformationModel model)
     {
         var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
-
-        return Ok(url);
+        return Redirect(url);
     }
 
     [HttpGet("vnpay-callback")]
