@@ -1,4 +1,5 @@
-﻿using HotelBooking.Application.DTOs.Filters;
+﻿using HotelBooking.Application.DTOs.Bookings;
+using HotelBooking.Application.DTOs.Filters;
 
 namespace HotelBooking.Application.DTOs.Hotels;
 public class HotelSearchRequest

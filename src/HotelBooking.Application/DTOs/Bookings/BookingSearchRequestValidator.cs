@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace HotelBooking.Application.DTOs.Hotels;
+namespace HotelBooking.Application.DTOs.Bookings;
 public class BookingSearchRequestValidator : AbstractValidator<BookingSearchRequest>
 {
     public BookingSearchRequestValidator()

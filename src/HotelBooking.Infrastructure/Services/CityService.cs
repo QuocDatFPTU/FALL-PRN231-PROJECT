@@ -21,23 +21,32 @@ public class CityService : ICityService
     }
     public async Task<PaginatedList<CityResponse>> GetTopDestinationsAsync(int limit)
     {
-        var cityIQ = await _unitOfWork.Repository<City>().FindToIQueryableAsync(orderBy: _ => _.OrderByDescending(_ => _.NoOfHotels));
-        var paginatedCities = await _mapper.ProjectTo<CityResponse>(cityIQ).PaginatedListAsync(1, limit);
-        return paginatedCities;
+        return await _unitOfWork.Repository<City>()
+                .FindAsync<CityResponse>(
+                    configuration: _mapper.ConfigurationProvider,
+                    pageIndex: 1,
+                    pageSize: limit,
+                    orderBy: _ => _.OrderByDescending(_ => _.NoOfHotels));
     }
 
     public async Task<PaginatedList<AreaRecommendationResponse>> GetPlaceRecommendationsAsync(int cityId, int limit)
     {
-        var areaIQ = await _unitOfWork.Repository<Area>()
-            .FindToIQueryableAsync(_ => _.CityId == cityId && _.NoOfHotels > 0, orderBy: _ => _.OrderByDescending(_ => _.NoOfHotels));
-        var paginatedAreas = await _mapper.ProjectTo<AreaRecommendationResponse>(areaIQ).PaginatedListAsync(1, limit);
-        return paginatedAreas;
+        return await _unitOfWork.Repository<Area>()
+                .FindAsync<AreaRecommendationResponse>(
+                    configuration: _mapper.ConfigurationProvider,
+                    pageIndex: 1,
+                    pageSize: limit,
+                    expression: _ => _.CityId == cityId && _.NoOfHotels > 0,
+                    orderBy: _ => _.OrderByDescending(_ => _.NoOfHotels));
     }
 
     public async Task<PaginatedList<CityResponse>> GetUnifiedSuggestResultAsync(string searchText, int limit)
     {
-        var cityIQ = await _unitOfWork.Repository<City>().FindToIQueryableAsync(_ => EF.Functions.Like(_.Name, $"%{searchText}%"));
-        var paginatedCities = await _mapper.ProjectTo<CityResponse>(cityIQ).PaginatedListAsync(1, limit);
-        return paginatedCities;
+        return await _unitOfWork.Repository<City>()
+                .FindAsync<CityResponse>(
+                    configuration: _mapper.ConfigurationProvider,
+                    pageIndex: 1,
+                    pageSize: limit,
+                    expression: _ => EF.Functions.Like(_.Name, $"%{searchText}%"));
     }
 }
