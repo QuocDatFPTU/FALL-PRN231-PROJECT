@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using HotelBooking.Application.Common.Exceptions;
 using HotelBooking.Application.DTOs.Hotels;
+using HotelBooking.Application.DTOs.RoomTypes;
 using HotelBooking.Application.Helpers;
 using HotelBooking.Application.Interfaces.Repositories;
 using HotelBooking.Application.Interfaces.Services;
 using HotelBooking.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+using System.Collections.Immutable;
 
 namespace HotelBooking.Infrastructure.Services;
 public class HotelService : IHotelService
@@ -32,40 +33,79 @@ public class HotelService : IHotelService
             throw new NotFoundException(nameof(City), request.CityId);
         }
 
-        //var hotelIQ = await _unitOfWork.Repository<Hotel>()
-        //            .FindToIQueryableAsync(
-        //            expression: h =>
-        //            h.Address.CityId == request.CityId &&
-        //            h.RoomTypes.Any(
-        //                r => r.ReservationDetails.Where(rd =>
-        //                    checkInDate >= rd.CheckInDate && checkInDate <= rd.CheckOutDate ||
-        //                    checkOutDate >= rd.CheckInDate && checkOutDate <= rd.CheckOutDate ||
-        //                    rd.CheckInDate >= checkInDate && rd.CheckInDate <= checkOutDate ||
-        //                    rd.CheckOutDate >= checkInDate && rd.CheckOutDate <= checkOutDate)
-        //                .Sum(rd => rd.Quantity) + request.Quantity <= r.Availability));
+        //var paginatedHotel = await _unitOfWork.Repository<Hotel>()
+        //     .FindAsync<HotelResponse>(
+        //        configuration: _mapper.ConfigurationProvider,
+        //        pageIndex: pageIndex,
+        //        pageSize: pageSize,
+        //        expression: h =>
+        //                    h.Address.CityId == request.CityId &&
+        //                    h.RoomTypes.Any(
+        //                        r => r.ReservationDetails.Where(rd =>
+        //                               checkInDate >= rd.CheckInDate && checkInDate <= rd.CheckOutDate ||
+        //                               checkOutDate >= rd.CheckInDate && checkOutDate <= rd.CheckOutDate ||
+        //                               rd.CheckInDate >= checkInDate && rd.CheckInDate <= checkOutDate ||
+        //                               rd.CheckOutDate >= checkInDate && rd.CheckOutDate <= checkOutDate)
+        //                             .Sum(rd => rd.Quantity) + request.Quantity <= r.Availability));
 
-        var hotelIQ = await _unitOfWork.Repository<Hotel>()
-                    .FindToIQueryableAsync(h => h.Address.CityId == request.CityId);
+        var paginatedHotel = await _unitOfWork.Repository<Hotel>()
+            .FindAsync<HotelResponse>(
+                _mapper.ConfigurationProvider,
+                pageIndex,
+                pageSize,
+                h => h.Address.CityId == request.CityId);
 
-        var paginatedHotel = await _mapper.ProjectTo<HotelResponse>(hotelIQ).PaginatedListAsync(pageIndex, pageSize);
+        var roomTypes = await _unitOfWork.Repository<RoomType>()
+            .FindAsync(
+                r => paginatedHotel.Select(_ => _.Id).Contains(r.HotelId) &&
+                r.ReservationDetails.Where(rd =>
+                    checkInDate >= rd.CheckInDate && checkInDate <= rd.CheckOutDate ||
+                    checkOutDate >= rd.CheckInDate && checkOutDate <= rd.CheckOutDate ||
+                    rd.CheckInDate >= checkInDate && rd.CheckInDate <= checkOutDate ||
+                    rd.CheckOutDate >= checkInDate && rd.CheckOutDate <= checkOutDate)
+                .Sum(rd => rd.Quantity) + request.Quantity <= r.Availability);
 
         foreach (var hotel in paginatedHotel)
         {
-            var roomTypes = await (await _unitOfWork.Repository<RoomType>()
-                             .FindToIQueryableAsync(
-                                 r => r.HotelId == hotel.Id &&
-                                 r.ReservationDetails.Where(rd =>
-                                     checkInDate >= rd.CheckInDate && checkInDate <= rd.CheckOutDate ||
-                                     checkOutDate >= rd.CheckInDate && checkOutDate <= rd.CheckOutDate ||
-                                     rd.CheckInDate >= checkInDate && rd.CheckInDate <= checkOutDate ||
-                                     rd.CheckOutDate >= checkInDate && rd.CheckOutDate <= checkOutDate)
-                                .Sum(rd => rd.Quantity) + request.Quantity <= r.Availability))
-                             .ToListAsync();
-
-            hotel.IsSoldOut = roomTypes.Count == 0;
-            hotel.PricePerNight = roomTypes.MinBy(_ => _.Price)?.Price;
+            hotel.IsSoldOut = !roomTypes.Any(_ => _.HotelId == hotel.Id);
+            hotel.PricePerNight = roomTypes.Where(_ => _.HotelId == hotel.Id).MinBy(_ => _.Price)?.Price;
         }
         return paginatedHotel.ToPaginatedResponse();
+    }
+
+    public async Task<HotelDetailResponse> FindHotelAsync(RoomTypeSearchRequest request)
+    {
+        var checkInDate = request.SearchCriteria.CheckInDate;
+        var checkOutDate = request.SearchCriteria.CheckoutDate;
+
+        var hotelResponse = (await _unitOfWork.Repository<Hotel>()
+            .FindByAsync<HotelDetailResponse>(_mapper.ConfigurationProvider, h => h.Id == request.HotelId))
+          .OrElseThrow(() => new NotFoundException(nameof(Hotel), request.HotelId));
+
+        hotelResponse.MasterRooms = await _unitOfWork.Repository<RoomType>()
+            .FindAsync<RoomTypeResponse>(
+               configuration: _mapper.ConfigurationProvider,
+               expression: r => r.HotelId == hotelResponse.Id &&
+                                r.ReservationDetails.Where(rd =>
+                                    checkInDate >= rd.CheckInDate && checkInDate <= rd.CheckOutDate ||
+                                    checkOutDate >= rd.CheckInDate && checkOutDate <= rd.CheckOutDate ||
+                                    rd.CheckInDate >= checkInDate && rd.CheckInDate <= checkOutDate ||
+                                    rd.CheckOutDate >= checkInDate && rd.CheckOutDate <= checkOutDate)
+                                .Sum(rd => rd.Quantity) + request.Quantity <= r.Availability,
+               orderBy: r => r.OrderBy(_ => _.Price));
+
+        hotelResponse.SoldOutRooms = await _unitOfWork.Repository<RoomType>()
+            .FindAsync<RoomTypeSoldOutResponse>(
+               configuration: _mapper.ConfigurationProvider,
+               expression: r => r.HotelId == hotelResponse.Id &&
+                                r.ReservationDetails.Where(rd =>
+                                    checkInDate >= rd.CheckInDate && checkInDate <= rd.CheckOutDate ||
+                                    checkOutDate >= rd.CheckInDate && checkOutDate <= rd.CheckOutDate ||
+                                    rd.CheckInDate >= checkInDate && rd.CheckInDate <= checkOutDate ||
+                                    rd.CheckOutDate >= checkInDate && rd.CheckOutDate <= checkOutDate)
+                                .Sum(rd => rd.Quantity) + request.Quantity > r.Availability);
+
+        return hotelResponse;
     }
 
 }

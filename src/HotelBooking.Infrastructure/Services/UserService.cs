@@ -21,8 +21,8 @@ public class UserService : IUserService
 
     public async Task<UserResponse> FindUserAsync(int id)
     {
-        var user = (await _unitOfWork.Repository<Guest>().FindByIdAsync(id))
-                   .OrElseThrow(() => new NotFoundException(nameof(Guest), id));
-        return _mapper.Map<UserResponse>(user);
+        return (await _unitOfWork.Repository<Guest>()
+                  .FindByAsync<UserResponse>(_mapper.ConfigurationProvider, _ => _.Id == id))
+               .OrElseThrow(() => new NotFoundException(nameof(Guest), id));
     }
 }
