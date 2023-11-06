@@ -31,6 +31,7 @@ public static class DependencyInjection
     private static void AddServices(this IServiceCollection services)
     {
         services
+            .AddScoped<IVnPayService, VnPayService>()
             .AddScoped<TokenHelper<Guest>>()
             .AddScoped<ICurrentUserService, CurrentUserService>()
             .AddScoped<IAuthService, AuthService>()
@@ -54,8 +55,9 @@ public static class DependencyInjection
         string defaultConnection = configuration.GetConnectionString("DefaultConnection")!;
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
            options.UseMySql(defaultConnection, ServerVersion.AutoDetect(defaultConnection),
-               builder => options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>()))
-                  .UseLazyLoadingProxies()
+               builder => builder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
+                  .ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
+                  .AddInterceptors(sp.GetServices<ISaveChangesInterceptor>())
                   .EnableSensitiveDataLogging()
                   .EnableDetailedErrors());
 

@@ -1,0 +1,19 @@
+MerchantAdminUrl : https://sandbox.vnpayment.vn/merchantv2/
+SIT : https://sandbox.vnpayment.vn/vnpaygw-sit-testing/user/login
+Username : moresac665@mainmile.com
+Password : moresac665A
+
+https://sandbox.vnpayment.vn/apis/vnpay-demo/
+
+- Thành công:
+Ngân hàng: NCB
+Số thẻ: 9704198526191432198
+Tên chủ thẻ:NGUYEN VAN A
+Ngày phát hành:07/15
+Mật khẩu OTP:123456
+
+- Thẻ không đủ số dư:
+Ngân hàng: NCB
+Số thẻ: 9704195798459170488
+Tên chủ thẻ:NGUYEN VAN A
+Ngày phát hành:07/15
