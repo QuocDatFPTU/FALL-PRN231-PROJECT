@@ -65,11 +65,11 @@ public class HotelService : IHotelService
                     rd.CheckOutDate >= checkInDate && rd.CheckOutDate <= checkOutDate)
                 .Sum(rd => rd.Quantity) + request.Quantity <= r.Availability);
 
-        foreach (var hotel in paginatedHotel)
+        paginatedHotel.ForEach(hotel =>
         {
             hotel.IsSoldOut = !roomTypes.Any(_ => _.HotelId == hotel.Id);
             hotel.PricePerNight = roomTypes.Where(_ => _.HotelId == hotel.Id).MinBy(_ => _.Price)?.Price;
-        }
+        });
         return paginatedHotel.ToPaginatedResponse();
     }
 

@@ -1,7 +1,6 @@
 ﻿using HotelBooking.Application.Common.Exceptions;
 using HotelBooking.Application.DTOs.Hotels;
 using HotelBooking.Application.DTOs.RoomTypes;
-using HotelBooking.Application.Helpers;
 using HotelBooking.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +16,12 @@ public class HotelsController : ControllerBase
     }
 
     [HttpPost("search")]
-    public async Task<ActionResult<PaginatedResponse<HotelResponse>>> GetHotels(HotelSearchRequest request)
+    public async Task<ActionResult<HotelSearchFilterResponse>> GetHotels(HotelSearchRequest request)
     {
-        return Ok(await _hotelService.GetHotelsAsync(request));
+        return Ok(new HotelSearchFilterResponse
+        {
+            Data = await _hotelService.GetHotelsAsync(request)
+        });
     }
 
     [HttpPost("{id}")]
