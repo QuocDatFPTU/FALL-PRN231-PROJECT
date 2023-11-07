@@ -21,10 +21,9 @@ public class PaymentsController : ControllerBase
     }
 
     [HttpGet("vnpay-callback")]
-    public IActionResult PaymentCallback([FromQuery] IDictionary<string, object> collections)
+    public IActionResult PaymentCallback()
     {
         var response = _vnPayService.PaymentExecute(Request.Query);
-
         return Ok(response);
     }
 }
