@@ -3,6 +3,7 @@ using System;
 using HotelBooking.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBooking.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231111144300_Add-Relate-Country-To-Guest")]
+    partial class AddRelateCountryToGuest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,6 +198,9 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Property<string>("AvatarUrl")
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("CountryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
@@ -223,6 +229,8 @@ namespace HotelBooking.Infrastructure.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
 
                     b.ToTable("Guests");
                 });
@@ -693,6 +701,15 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Navigation("Country");
                 });
 
+            modelBuilder.Entity("HotelBooking.Domain.Entities.Guest", b =>
+                {
+                    b.HasOne("HotelBooking.Domain.Entities.Country", "Country")
+                        .WithMany("Guests")
+                        .HasForeignKey("CountryId");
+
+                    b.Navigation("Country");
+                });
+
             modelBuilder.Entity("HotelBooking.Domain.Entities.Hotel", b =>
                 {
                     b.HasOne("HotelBooking.Domain.Entities.Category", "Category")
@@ -906,6 +923,8 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Navigation("Addresss");
 
                     b.Navigation("Cities");
+
+                    b.Navigation("Guests");
                 });
 
             modelBuilder.Entity("HotelBooking.Domain.Entities.Facility", b =>

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HotelBooking.Application.Common.Exceptions;
 using HotelBooking.Application.DTOs.Hotels;
+using HotelBooking.Application.DTOs.Reviews;
 using HotelBooking.Application.DTOs.RoomTypes;
 using HotelBooking.Application.Helpers;
 using HotelBooking.Application.Interfaces.Repositories;
@@ -108,4 +109,19 @@ public class HotelService : IHotelService
         return hotelResponse;
     }
 
+    public async Task<PaginatedResponse<ReviewResponse>> GetReviewsAsync(int hotelId, int pageIndex, int pageSize)
+    {
+        if (!await _unitOfWork.Repository<Hotel>().ExistsByAsync(c => c.Id == hotelId))
+            throw new NotFoundException(nameof(Hotel), hotelId);
+
+        var paginatedReview = await _unitOfWork.Repository<Review>()
+             .FindAsync<ReviewResponse>(
+                 configuration: _mapper.ConfigurationProvider,
+                 pageIndex: pageIndex,
+                 pageSize: pageSize,
+                 expression: r => r.ReservationDetail.RoomType.HotelId == hotelId,
+                 orderBy: r => r.OrderByDescending(_ => _.CreatedAt));
+
+        return paginatedReview.ToPaginatedResponse();
+    }
 }
