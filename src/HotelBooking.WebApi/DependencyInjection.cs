@@ -1,6 +1,7 @@
 ﻿using HotelBooking.Application.Common.Exceptions;
 using HotelBooking.Infrastructure;
 using HotelBooking.WebApi.Extensions;
+using HotelBooking.WebApi.Swagger;
 using HotelBooking.WebApi.Transformers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
@@ -57,6 +58,7 @@ public static class DependencyInjection
             });
             c.OperationFilter<SecurityRequirementsOperationFilter>(JwtBearerDefaults.AuthenticationScheme);
             c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+            c.OperationFilter<SecurityRequirementsOperationFilterForNotAuthorize>();
         });
     }
 
@@ -105,7 +107,7 @@ public static class DependencyInjection
            .AllowAnyHeader());
 
         app.UseHttpsRedirection();
-
+        app.UseStaticFiles();
         app.UseAuthentication();
         app.UseAuthorization();
 

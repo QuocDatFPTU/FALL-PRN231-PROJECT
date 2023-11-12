@@ -31,7 +31,7 @@ public static class DependencyInjection
     private static void AddServices(this IServiceCollection services)
     {
         services
-            .AddScoped<IVnPayService, VnPayService>()
+            .AddScoped<IPaymentService, PaymentService>()
             .AddScoped<TokenHelper<Guest>>()
             .AddScoped<ICurrentUserService, CurrentUserService>()
             .AddScoped<IAuthService, AuthService>()

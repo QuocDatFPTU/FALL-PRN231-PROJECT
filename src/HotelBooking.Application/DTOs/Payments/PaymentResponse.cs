@@ -1,7 +1,9 @@
-﻿using HotelBooking.Domain.Common;
+﻿using HotelBooking.Application.Common.Mappings;
+using HotelBooking.Domain.Common;
+using HotelBooking.Domain.Entities;
 
-namespace HotelBooking.Domain.Entities;
-public class Payment : BaseAuditableEntity
+namespace HotelBooking.Application.DTOs.Payments;
+public class PaymentResponse : BaseAuditableEntity, IMapFrom<Payment>
 {
     public double Amount { get; set; }
     public long? TransactionNo { get; set; }
@@ -16,8 +18,6 @@ public class Payment : BaseAuditableEntity
     public string CreateDate { get; set; } = default!;
     public string? OrderInfo { get; set; }
     public string OrderType { get; set; } = default!;
-
-    public int TxnRef { get; set; }
     public int ReservationId { get; set; }
-    public virtual Reservation Reservation { get; set; } = default!;
+    public int TxnRef { get; set; }
 }
