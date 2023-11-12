@@ -1,8 +1,5 @@
-﻿using HotelBooking.Application.DTOs.Payments;
-using Microsoft.AspNetCore.Http;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Net;
-using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -11,74 +8,6 @@ public class VnPayLibrary
     private readonly SortedList<string, string> _requestData = new SortedList<string, string>(new VnPayCompare());
     private readonly SortedList<string, string> _responseData = new SortedList<string, string>(new VnPayCompare());
 
-    public PaymentResponseModel GetFullResponseData(IQueryCollection collection, string hashSecret)
-    {
-        var vnPay = new VnPayLibrary();
-
-        foreach (var (key, value) in collection)
-        {
-            if (!string.IsNullOrEmpty(key) && key.StartsWith("vnp_"))
-            {
-                vnPay.AddResponseData(key, value);
-            }
-        }
-
-        var orderId = Convert.ToInt64(vnPay.GetResponseData("vnp_TxnRef"));
-        var vnPayTranId = Convert.ToInt64(vnPay.GetResponseData("vnp_TransactionNo"));
-        var vnpResponseCode = vnPay.GetResponseData("vnp_ResponseCode");
-        var vnpSecureHash =
-            collection.FirstOrDefault(k => k.Key == "vnp_SecureHash").Value; //hash của dữ liệu trả về
-        var orderInfo = vnPay.GetResponseData("vnp_OrderInfo");
-
-        var checkSignature =
-            vnPay.ValidateSignature(vnpSecureHash, hashSecret); //check Signature
-
-        if (!checkSignature)
-            return new PaymentResponseModel()
-            {
-                Success = false
-            };
-
-        return new PaymentResponseModel()
-        {
-            Success = true,
-            PaymentMethod = "VnPay",
-            OrderDescription = orderInfo,
-            OrderId = orderId.ToString(),
-            PaymentId = vnPayTranId.ToString(),
-            TransactionId = vnPayTranId.ToString(),
-            Token = vnpSecureHash,
-            VnPayResponseCode = vnpResponseCode
-        };
-    }
-    public string GetIpAddress(HttpContext context)
-    {
-        var ipAddress = string.Empty;
-        try
-        {
-            var remoteIpAddress = context.Connection.RemoteIpAddress;
-
-            if (remoteIpAddress != null)
-            {
-                if (remoteIpAddress.AddressFamily == AddressFamily.InterNetworkV6)
-                {
-                    remoteIpAddress = Dns.GetHostEntry(remoteIpAddress).AddressList
-                        .FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork);
-                }
-
-                if (remoteIpAddress != null) ipAddress = remoteIpAddress.ToString();
-
-                Console.WriteLine(ipAddress);
-                return ipAddress;
-            }
-        }
-        catch (Exception ex)
-        {
-            return ex.Message;
-        }
-
-        return "127.0.0.1";
-    }
     public void AddRequestData(string key, string value)
     {
         if (!string.IsNullOrEmpty(value))

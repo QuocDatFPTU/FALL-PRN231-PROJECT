@@ -29,10 +29,10 @@ public class CityService : ICityService
                     orderBy: _ => _.OrderByDescending(_ => _.NoOfHotels));
     }
 
-    public async Task<PaginatedList<AreaRecommendationResponse>> GetPlaceRecommendationsAsync(int cityId, int limit)
+    public async Task<PaginatedList<RecommendationAreaResponse>> GetPlaceRecommendationsAsync(int cityId, int limit)
     {
         return await _unitOfWork.Repository<Area>()
-                .FindAsync<AreaRecommendationResponse>(
+                .FindAsync<RecommendationAreaResponse>(
                     configuration: _mapper.ConfigurationProvider,
                     pageIndex: 1,
                     pageSize: limit,

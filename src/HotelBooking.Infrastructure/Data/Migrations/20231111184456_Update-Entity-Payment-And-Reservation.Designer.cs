@@ -3,6 +3,7 @@ using System;
 using HotelBooking.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBooking.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231111184456_Update-Entity-Payment-And-Reservation")]
+    partial class UpdateEntityPaymentAndReservation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -394,7 +397,15 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("CurrencyCode")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Locale")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -405,6 +416,7 @@ namespace HotelBooking.Infrastructure.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("OrderInfo")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("OrderType")
@@ -423,6 +435,10 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Property<string>("SecureHash")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("TerminalCode")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<long?>("TransactionNo")
                         .HasColumnType("bigint");
 
@@ -431,6 +447,10 @@ namespace HotelBooking.Infrastructure.Migrations
 
                     b.Property<int>("TxnRef")
                         .HasColumnType("int");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 

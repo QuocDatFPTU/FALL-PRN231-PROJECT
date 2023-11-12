@@ -7,6 +7,7 @@ using HotelBooking.Application.Helpers;
 using HotelBooking.Application.Interfaces.Repositories;
 using HotelBooking.Application.Interfaces.Services;
 using HotelBooking.Domain.Entities;
+using HotelBooking.Domain.Enums;
 using System.Collections.Immutable;
 
 namespace HotelBooking.Infrastructure.Services;
@@ -25,7 +26,7 @@ public class HotelService : IHotelService
     public async Task<PaginatedResponse<HotelResponse>> GetHotelsAsync(HotelSearchRequest request)
     {
         var checkInDate = request.SearchCriteria.CheckInDate;
-        var checkOutDate = request.SearchCriteria.CheckoutDate;
+        var checkOutDate = request.SearchCriteria.CheckOutDate;
         var pageIndex = request.Page.PageIndex;
         var pageSize = request.Page.PageSize;
 
@@ -60,10 +61,11 @@ public class HotelService : IHotelService
             .FindAsync(
                 r => paginatedHotel.Select(_ => _.Id).Contains(r.HotelId) &&
                 r.ReservationDetails.Where(rd =>
-                    checkInDate >= rd.CheckInDate && checkInDate <= rd.CheckOutDate ||
+                    rd.Reservation.Status != ReservationStatus.Canceled &&
+                   (checkInDate >= rd.CheckInDate && checkInDate <= rd.CheckOutDate ||
                     checkOutDate >= rd.CheckInDate && checkOutDate <= rd.CheckOutDate ||
                     rd.CheckInDate >= checkInDate && rd.CheckInDate <= checkOutDate ||
-                    rd.CheckOutDate >= checkInDate && rd.CheckOutDate <= checkOutDate)
+                    rd.CheckOutDate >= checkInDate && rd.CheckOutDate <= checkOutDate))
                 .Sum(rd => rd.Quantity) + request.Quantity <= r.Availability);
 
         paginatedHotel.ForEach(hotel =>
@@ -77,7 +79,7 @@ public class HotelService : IHotelService
     public async Task<HotelDetailResponse> FindHotelAsync(RoomTypeSearchRequest request)
     {
         var checkInDate = request.SearchCriteria.CheckInDate;
-        var checkOutDate = request.SearchCriteria.CheckoutDate;
+        var checkOutDate = request.SearchCriteria.CheckOutDate;
 
         var hotelResponse = (await _unitOfWork.Repository<Hotel>()
             .FindByAsync<HotelDetailResponse>(_mapper.ConfigurationProvider, h => h.Id == request.HotelId))
@@ -88,10 +90,11 @@ public class HotelService : IHotelService
                configuration: _mapper.ConfigurationProvider,
                expression: r => r.HotelId == hotelResponse.Id &&
                                 r.ReservationDetails.Where(rd =>
-                                    checkInDate >= rd.CheckInDate && checkInDate <= rd.CheckOutDate ||
+                                    rd.Reservation.Status != ReservationStatus.Canceled &&
+                                   (checkInDate >= rd.CheckInDate && checkInDate <= rd.CheckOutDate ||
                                     checkOutDate >= rd.CheckInDate && checkOutDate <= rd.CheckOutDate ||
                                     rd.CheckInDate >= checkInDate && rd.CheckInDate <= checkOutDate ||
-                                    rd.CheckOutDate >= checkInDate && rd.CheckOutDate <= checkOutDate)
+                                    rd.CheckOutDate >= checkInDate && rd.CheckOutDate <= checkOutDate))
                                 .Sum(rd => rd.Quantity) + request.Quantity <= r.Availability,
                orderBy: r => r.OrderBy(_ => _.Price));
 
@@ -100,10 +103,11 @@ public class HotelService : IHotelService
                configuration: _mapper.ConfigurationProvider,
                expression: r => r.HotelId == hotelResponse.Id &&
                                 r.ReservationDetails.Where(rd =>
-                                    checkInDate >= rd.CheckInDate && checkInDate <= rd.CheckOutDate ||
+                                    rd.Reservation.Status != ReservationStatus.Canceled &&
+                                   (checkInDate >= rd.CheckInDate && checkInDate <= rd.CheckOutDate ||
                                     checkOutDate >= rd.CheckInDate && checkOutDate <= rd.CheckOutDate ||
                                     rd.CheckInDate >= checkInDate && rd.CheckInDate <= checkOutDate ||
-                                    rd.CheckOutDate >= checkInDate && rd.CheckOutDate <= checkOutDate)
+                                    rd.CheckOutDate >= checkInDate && rd.CheckOutDate <= checkOutDate))
                                 .Sum(rd => rd.Quantity) + request.Quantity > r.Availability);
 
         return hotelResponse;
@@ -119,7 +123,8 @@ public class HotelService : IHotelService
                  configuration: _mapper.ConfigurationProvider,
                  pageIndex: pageIndex,
                  pageSize: pageSize,
-                 expression: r => r.ReservationDetail.RoomType.HotelId == hotelId,
+                 expression: r => r.ReservationDetail.RoomType.HotelId == hotelId &&
+                                  r.ReservationDetail.Reservation.Status == ReservationStatus.Confirmed,
                  orderBy: r => r.OrderByDescending(_ => _.CreatedAt));
 
         return paginatedReview.ToPaginatedResponse();

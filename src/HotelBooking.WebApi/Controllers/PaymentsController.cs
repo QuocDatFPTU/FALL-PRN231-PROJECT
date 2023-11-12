@@ -1,29 +1,33 @@
 ﻿using HotelBooking.Application.DTOs.Payments;
+using HotelBooking.Application.Helpers;
 using HotelBooking.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HotelBooking.WebApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class PaymentsController : ControllerBase
 {
-    private readonly IVnPayService _vnPayService;
-    public PaymentsController(IVnPayService vnPayService)
+    private readonly IPaymentService _paymentService;
+    public PaymentsController(IPaymentService paymentService)
     {
-        _vnPayService = vnPayService;
+        _paymentService = paymentService;
     }
 
-    [HttpGet("vnpay-url")]
-    public IActionResult CreatePaymentUrl([FromQuery] PaymentInformationModel model)
+    [HttpPost("return")]
+    public async Task<IActionResult> CreatePaymentUrl(CreateReservationRequest request, string returnUrl)
     {
-        var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
+        var id = User.FindFirstValue(ClaimTypes.NameIdentifier)?.ConvertToInteger();
+        var reservationResponse = await _paymentService.AddReservationAsync(id, request);
+        var url = await _paymentService.CreatePaymentUrlAsync(reservationResponse, returnUrl);
         return Redirect(url);
+        //return Ok(url);
     }
 
-    [HttpGet("vnpay-callback")]
-    public IActionResult PaymentCallback()
+    [HttpGet("IPN")]
+    public async Task<ActionResult<ReservationResponse>> PaymentCallback()
     {
-        var response = _vnPayService.PaymentExecute(Request.Query);
-        return Ok(response);
+        return await _paymentService.PaymentCallbackAsync(Request.Query);
     }
 }

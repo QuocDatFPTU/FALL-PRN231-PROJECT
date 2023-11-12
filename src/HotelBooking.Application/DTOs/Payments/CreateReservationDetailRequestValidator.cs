@@ -1,10 +1,12 @@
 ﻿using FluentValidation;
 
-namespace HotelBooking.Application.DTOs.Bookings;
-public class BookingSearchRequestValidator : AbstractValidator<BookingSearchRequest>
+namespace HotelBooking.Application.DTOs.Payments;
+public class CreateReservationDetailRequestValidator : AbstractValidator<CreateReservationDetailRequest>
 {
-    public BookingSearchRequestValidator()
+    public CreateReservationDetailRequestValidator()
     {
+        RuleFor(x => x.Quantity).GreaterThan(0);
+
         RuleFor(x => x.CheckInDate)
             .LessThanOrEqualTo(x => x.CheckOutDate).WithMessage("CheckInDate must be less than CheckOutDate")
             .GreaterThanOrEqualTo(x => DateOnly.FromDateTime(DateTime.Now)).WithMessage("CheckInDate must be greater than today");

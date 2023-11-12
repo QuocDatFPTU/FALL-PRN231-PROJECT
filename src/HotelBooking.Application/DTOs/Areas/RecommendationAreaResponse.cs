@@ -4,7 +4,7 @@ using HotelBooking.Domain.Common;
 using HotelBooking.Domain.Entities;
 
 namespace HotelBooking.Application.DTOs.Areas;
-public class AreaRecommendationResponse : BaseEntity, IMapFrom<Area>
+public class RecommendationAreaResponse : BaseEntity, IMapFrom<Area>
 {
     public string Name { get; set; } = default!;
     public int NoOfHotels { get; set; }

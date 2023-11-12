@@ -25,7 +25,7 @@ public class CitiesController : ControllerBase
     /// <param name="id">19</param>
     /// <param name="limit">default 10</param>
     [HttpGet("{id}/place-recommendations")]
-    public async Task<ActionResult<PaginatedList<AreaRecommendationResponse>>> GetPlaceRecommendations(int id, int limit)
+    public async Task<ActionResult<PaginatedList<RecommendationAreaResponse>>> GetPlaceRecommendations(int id, int limit)
     {
         return Ok(await _cityService.GetPlaceRecommendationsAsync(id, limit));
     }

@@ -3,6 +3,7 @@ using System;
 using HotelBooking.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBooking.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231111160031_Update-Entity-Payment")]
+    partial class UpdateEntityPayment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -376,15 +379,6 @@ namespace HotelBooking.Infrastructure.Migrations
                         .HasColumnType("double");
 
                     b.Property<string>("BankCode")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("BankTranNo")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("CardType")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("CreateDate")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -394,39 +388,32 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("IpAddress")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<DateTimeOffset?>("ModifiedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("OrderInfo")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("OrderType")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("PayDate")
-                        .HasColumnType("longtext");
-
                     b.Property<int>("ReservationId")
                         .HasColumnType("int");
 
                     b.Property<string>("ResponseCode")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("SecureHash")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<long?>("TransactionNo")
+                    b.Property<string>("TerminalCode")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<long>("TransactionNo")
                         .HasColumnType("bigint");
 
                     b.Property<string>("TransactionStatus")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("TxnRef")
@@ -465,7 +452,7 @@ namespace HotelBooking.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(24)");
 
-                    b.Property<double>("TotalAmount")
+                    b.Property<double>("TotalCost")
                         .HasColumnType("double");
 
                     b.Property<int>("TotalQuantity")
