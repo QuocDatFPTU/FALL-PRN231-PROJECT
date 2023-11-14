@@ -3,9 +3,12 @@ using HotelBooking.Application.Common.Exceptions;
 using HotelBooking.Application.DTOs.Hotels;
 using HotelBooking.Application.DTOs.Reviews;
 using HotelBooking.Application.DTOs.RoomTypes;
+using HotelBooking.Application.DTOs.Sorting;
+using HotelBooking.Application.Enums.Sorting;
 using HotelBooking.Application.Helpers;
 using HotelBooking.Application.Interfaces.Repositories;
 using HotelBooking.Application.Interfaces.Services;
+using HotelBooking.Application.Specifications;
 using HotelBooking.Domain.Entities;
 using HotelBooking.Domain.Enums;
 using System.Collections.Immutable;
@@ -23,7 +26,7 @@ public class HotelService : IHotelService
         _mapper = mapper;
     }
 
-    public async Task<PaginatedResponse<HotelResponse>> GetHotelsAsync(HotelSearchRequest request)
+    public async Task<HotelSearchFilterResponse> GetHotelsAsync(HotelSearchRequest request)
     {
         var checkInDate = request.SearchCriteria.CheckInDate;
         var checkOutDate = request.SearchCriteria.CheckOutDate;
@@ -50,12 +53,15 @@ public class HotelService : IHotelService
         //                               rd.CheckOutDate >= checkInDate && rd.CheckOutDate <= checkOutDate)
         //                             .Sum(rd => rd.Quantity) + request.Quantity <= r.Availability));
 
+        var specification = new HotelWithSpecification(request);
+
         var paginatedHotel = await _unitOfWork.Repository<Hotel>()
             .FindAsync<HotelResponse>(
                 _mapper.ConfigurationProvider,
                 pageIndex,
                 pageSize,
-                h => h.Address.CityId == request.CityId);
+                specification.Criteria,
+                specification.OrderBy);
 
         var roomTypes = await _unitOfWork.Repository<RoomType>()
             .FindAsync(
@@ -73,7 +79,50 @@ public class HotelService : IHotelService
             hotel.IsSoldOut = !roomTypes.Any(_ => _.HotelId == hotel.Id);
             hotel.PricePerNight = roomTypes.Where(_ => _.HotelId == hotel.Id).MinBy(_ => _.Price)?.Price;
         });
-        return paginatedHotel.ToPaginatedResponse();
+        return new()
+        {
+            Data = await paginatedHotel.ToPaginatedResponseAsync(),
+            SortMatrix = await CreateSortMatrix(),
+        };
+    }
+
+    protected Task<List<SortMatrix>> CreateSortMatrix()
+    {
+        var sortMatrix = new List<SortMatrix>
+        {
+            new SortMatrix
+            {
+                FieldId = SortField.Ranking,
+                Sorting = new()
+                {
+                    SortField = SortField.Ranking,
+                    SortOrder = SortOrder.Desc
+                },
+                Display = "Phù hợp nhất"
+            },
+            new SortMatrix
+            {
+                FieldId = SortField.Price,
+                Sorting = new()
+                {
+                    SortField = SortField.Price,
+                    SortOrder = SortOrder.Asc
+                },
+                Display = "Giá thấp nhất trước"
+            },
+            new SortMatrix
+            {
+                FieldId = SortField.ReviewScore,
+                Sorting = new()
+                {
+                    SortField = SortField.ReviewScore,
+                    SortOrder = SortOrder.Desc
+                },
+                Display = "ĐÁNH GIÁ"
+            }
+        };
+
+        return Task.FromResult(sortMatrix);
     }
 
     public async Task<HotelDetailResponse> FindHotelAsync(RoomTypeSearchRequest request)
@@ -127,6 +176,6 @@ public class HotelService : IHotelService
                                   r.ReservationDetail.Reservation.Status == ReservationStatus.Confirmed,
                  orderBy: r => r.OrderByDescending(_ => _.CreatedAt));
 
-        return paginatedReview.ToPaginatedResponse();
+        return await paginatedReview.ToPaginatedResponseAsync();
     }
 }

@@ -56,17 +56,8 @@ public class ApplicationDbContextInitialiser
         }
     }
 
-    private async Task TrySeedAsync()
+    private Task TrySeedAsync()
     {
-        //await _context.RoomTypes.ExecuteUpdateAsync(_ => _.SetProperty(_ => _.Price, _ => _.Price * 1000));
-        //await _context.ReservationDetails.ExecuteUpdateAsync(_ => _.SetProperty(_ => _.Price, _ => _.Price * 1000));
-        //await _context.Reservations.ExecuteUpdateAsync(_ => _.SetProperty(_ => _.Status, _ => ReservationStatus.Confirmed));
-        //await _context.Reservations
-        //    .Select(_ => new { Reservation = _, TotalQuantity = _.ReservationDetails.Sum(_ => _.Quantity) })
-        //    .ExecuteUpdateAsync(_ => _.SetProperty(_ => _.Reservation.TotalQuantity, _ => _.TotalQuantity));
-        //await _context.Reservations
-        //    .Select(_ => new { Reservation = _, TotalAmount = _.ReservationDetails.Sum(_ => _.Price) })
-        //    .ExecuteUpdateAsync(_ => _.SetProperty(_ => _.Reservation.TotalAmount, _ => _.TotalAmount));
-
+        return Task.CompletedTask;
     }
 }

@@ -20,10 +20,7 @@ public class HotelsController : ControllerBase
     [HttpPost("search")]
     public async Task<ActionResult<HotelSearchFilterResponse>> GetHotels(HotelSearchRequest request)
     {
-        return Ok(new HotelSearchFilterResponse
-        {
-            Data = await _hotelService.GetHotelsAsync(request)
-        });
+        return await _hotelService.GetHotelsAsync(request);
     }
 
     [HttpPost("{id}")]

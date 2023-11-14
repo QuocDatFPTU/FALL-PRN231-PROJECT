@@ -24,8 +24,8 @@ public class PaginatedResponse<T> where T : class
 
 public static class PaginatedResponseExtensions
 {
-    public static PaginatedResponse<T> ToPaginatedResponse<T>(this PaginatedList<T> source) where T : class
+    public static Task<PaginatedResponse<T>> ToPaginatedResponseAsync<T>(this PaginatedList<T> source) where T : class
     {
-        return new PaginatedResponse<T>(source);
+        return Task.FromResult(new PaginatedResponse<T>(source));
     }
 }
