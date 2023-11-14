@@ -2,10 +2,8 @@
 public enum FilterKey
 {
     HotelAreaId,
-    ReviewScore,
-    ProductType,
     AccommodationType,
+    Price,
     StarRating,
-    Name,
-    Unknown
+    Name
 }
