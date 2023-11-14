@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
+﻿using HotelBooking.Application.Helpers;
+using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace HotelBooking.Application.Specifications;
@@ -26,6 +27,11 @@ public class BaseSpecification<T> : ISpecifications<T>
     public void AddOrderByDecending(Expression<Func<T, object>> OrderByDecending)
     {
         OrderBy = a => a.OrderByDescending(OrderByDecending);
+    }
+
+    public void AddFilter(Expression<Func<T, bool>> expression)
+    {
+        Criteria = Criteria.AndAlso(expression);
     }
 
 }

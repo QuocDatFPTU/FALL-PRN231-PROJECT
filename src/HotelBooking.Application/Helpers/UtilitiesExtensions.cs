@@ -22,7 +22,7 @@ public static class UtilitiesExtensions
         return value ?? throw exceptionSupplier.Invoke();
     }
 
-    public static bool IsNullOrEmpty(this IEnumerable @this)
+    public static bool IsNullOrEmpty(this IEnumerable? @this)
     {
         if (@this != null)
         {
