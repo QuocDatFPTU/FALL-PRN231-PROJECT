@@ -15,7 +15,6 @@ using HotelBooking.Domain.Entities;
 using HotelBooking.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Immutable;
-using System.Linq.Expressions;
 
 namespace HotelBooking.Infrastructure.Services;
 public class HotelService : IHotelService
@@ -87,14 +86,104 @@ public class HotelService : IHotelService
         {
             Data = await paginatedHotel.ToPaginatedResponseAsync(),
             SortMatrix = await CreateSortMatrix(),
-            MatrixGroupFilters = await CreateMatrixGroup(request)
+            MatrixGroupFilters = await UpdateMatrixGroup(request)
         };
     }
 
-    protected async Task<List<MatrixGroup>> CreateMatrixGroup(HotelSearchRequest request)
+    protected async Task<List<MatrixGroup>> UpdateMatrixGroup(HotelSearchRequest request)
+    {
+        var matrixGroups = await CreateMatrixGroup();
+        HotelSearchWithSpecification specification;
+        var matrixItems = matrixGroups.First(_ => _.FilterKeyGroup == FilterKey.HotelAreaId);
+        var requestClone = request.DeepClone();
+
+        // HotelAreaId
+        requestClone.FilterRequest.IdsFilters.RemoveIf(_ => _.FilterKey == FilterKey.HotelAreaId);
+        specification = new HotelSearchWithSpecification(requestClone);
+        matrixItems.MatrixItems = await CreateMatrixItems(specification, matrixItems.FilterKeyGroup, FilterRequestType.IDs);
+
+        // AccommodationType
+        requestClone = request.DeepClone();
+        requestClone.FilterRequest.IdsFilters.RemoveIf(_ => _.FilterKey == FilterKey.AccommodationType);
+        specification = new HotelSearchWithSpecification(requestClone);
+        matrixItems = matrixGroups.First(_ => _.FilterKeyGroup == FilterKey.AccommodationType);
+        matrixItems.MatrixItems = await CreateMatrixItems(specification, matrixItems.FilterKeyGroup, FilterRequestType.IDs);
+
+        // Start rating
+        requestClone = request.DeepClone();
+        requestClone.FilterRequest.RangeFilters.RemoveIf(_ => _.FilterKey == FilterKey.StarRating);
+        specification = new HotelSearchWithSpecification(requestClone);
+        matrixItems = matrixGroups.First(_ => _.FilterKeyGroup == FilterKey.StarRating);
+        matrixItems.MatrixItems = await CreateMatrixItems(specification, matrixItems.FilterKeyGroup, FilterRequestType.Range);
+
+        return matrixGroups;
+    }
+
+    protected async Task<List<MatrixItem>> CreateMatrixItems(
+        HotelSearchWithSpecification specification,
+        FilterKey filterKey,
+        FilterRequestType filterRequestType)
+    {
+        var hotels = await _unitOfWork.Repository<Hotel>()
+              .FindAsync(
+                  expression: specification.Criteria,
+                  includeFunc: _ => _.Include(_ => _.Address.Area)
+                                     .Include(_ => _.Category));
+
+        var groupFilter = filterKey switch
+        {
+            // lưu ý: nếu GroupBy là class thì class đó phải có Equals GetHashCode
+            // nếu dùng new GroupFilter phải có Equals GetHashCode trong GroupFilter
+            // nếu dùng _.Category phải có Equals GetHashCode trong GroupFilter Category
+            // nếu không muốn Equals GetHashCode thì dùng anonymous funtion new { } , lưu ý tất cả các case phải có param anonymous funtion new { } giống nhau
+            FilterKey.HotelAreaId => hotels.GroupBy(_ => new
+            {
+                _.Address.Area.Id,
+                _.Address.Area.Name,
+            }),
+            FilterKey.AccommodationType => hotels.GroupBy(_ => new
+            {
+                _.Category.Id,
+                _.Category.Name,
+            }),
+            FilterKey.StarRating => hotels.GroupBy(_ => new
+            {
+                // do không có properties name Id , Name nên phải map
+                Id = _.ReviewRating,
+                Name = $"{_.ReviewRating} rating",
+            }),
+            _ => throw new BadRequestException($"`{filterKey}` not supporter for response filter")
+        };
+
+        return groupFilter.Select(_ => new MatrixItem
+        {
+            Id = _.Key.Id,
+            Name = _.Key.Name,
+            Count = _.Count(),
+            FilterKey = filterKey,
+            FilterRequestType = filterRequestType,
+        }).OrderByDescending(_ => _.Count).ThenBy(_ => _.Id).ToList();
+    }
+
+    protected Task<List<MatrixGroup>> CreateMatrixGroup()
     {
         var matrixGroups = new List<MatrixGroup>
         {
+            new MatrixGroup
+            {
+                FilterKeyGroup = FilterKey.AccommodationType,
+                MatrixItems = new List<MatrixItem>()
+            },
+            new MatrixGroup
+            {
+                FilterKeyGroup = FilterKey.HotelAreaId,
+                MatrixItems = new List<MatrixItem>()
+            },
+            new MatrixGroup
+            {
+                FilterKeyGroup = FilterKey.StarRating,
+                MatrixItems = new List<MatrixItem>()
+            },
             new MatrixGroup
             {
                 FilterKeyGroup = FilterKey.Price,
@@ -127,191 +216,9 @@ public class HotelService : IHotelService
             }
         };
 
-        Expression<Func<Hotel, bool>> expressionHotelArea = _ => _.Address.CityId == request.CityId;
-        Expression<Func<Hotel, bool>> expressionHotelCategory = _ => _.Address.CityId == request.CityId;
-        Expression<Func<Hotel, bool>> expressionHotelStarRating = _ => _.Address.CityId == request.CityId;
-
-        var filterRequest = request.FilterRequest;
-
-        if (filterRequest != null)
-        {
-            var idsFilters = filterRequest.IdsFilters;
-            var rangeFilters = filterRequest.RangeFilters;
-            var textFilters = filterRequest.TextFilters;
-
-            if (!idsFilters.IsNullOrEmpty())
-            {
-                idsFilters = idsFilters!.DistinctBy(_ => _.FilterKey).ToList();
-                foreach (var item in idsFilters!)
-                {
-                    switch (item.FilterKey)
-                    {
-                        case FilterKey.HotelAreaId:
-                            expressionHotelCategory = expressionHotelCategory.AndAlso(_ => item.Ids.Contains(_.Address.AreaId));
-                            expressionHotelStarRating = expressionHotelStarRating.AndAlso(_ => item.Ids.Contains(_.Address.AreaId));
-                            break;
-                        case FilterKey.AccommodationType:
-                            expressionHotelArea = expressionHotelArea.AndAlso(_ => item.Ids.Contains(_.CategoryId));
-                            expressionHotelStarRating = expressionHotelStarRating.AndAlso(_ => item.Ids.Contains(_.CategoryId));
-                            break;
-                        default:
-                            throw new BadRequestException($"`{item.FilterKey}` not supporter for idsFilters");
-                    }
-                }
-            }
-
-            if (!rangeFilters.IsNullOrEmpty())
-            {
-                rangeFilters = rangeFilters!.DistinctBy(_ => _.FilterKey).ToList();
-                foreach (var item in rangeFilters!)
-                {
-                    Expression<Func<Hotel, bool>> expression = _ => false;
-                    switch (item.FilterKey)
-                    {
-                        case FilterKey.Price:
-
-                            foreach (var range in item.Ranges)
-                            {
-                                expression = expression.OrElse(_ => _.RoomTypes.Any(_ => _.Price >= range.From && _.Price <= range.To));
-                            }
-                            expressionHotelStarRating = expressionHotelStarRating.AndAlso(expression);
-                            expressionHotelArea = expressionHotelArea.AndAlso(expression);
-                            expressionHotelCategory = expressionHotelCategory.AndAlso(expression);
-                            break;
-                        case FilterKey.StarRating:
-
-                            foreach (var range in item.Ranges)
-                            {
-                                expression = expression.OrElse(_ => _.ReviewRating >= range.From && _.ReviewRating < range.To);
-                            }
-                            expressionHotelArea = expressionHotelArea.AndAlso(expression);
-                            expressionHotelCategory = expressionHotelCategory.AndAlso(expression);
-                            break;
-                        default:
-                            throw new BadRequestException($"`{item.FilterKey}` not supporter for rangeFilters");
-                    }
-                }
-            }
-
-            if (!textFilters.IsNullOrEmpty())
-            {
-                textFilters = textFilters!.DistinctBy(_ => _.FilterKey).ToList();
-                foreach (var item in textFilters!)
-                {
-                    switch (item.FilterKey)
-                    {
-                        case FilterKey.Name:
-                            expressionHotelArea = expressionHotelArea.AndAlso(_ => EF.Functions.Like(_.Name, $"%{item.Text}%"));
-                            expressionHotelCategory = expressionHotelCategory.AndAlso(_ => EF.Functions.Like(_.Name, $"%{item.Text}%"));
-                            expressionHotelStarRating = expressionHotelStarRating.AndAlso(_ => EF.Functions.Like(_.Name, $"%{item.Text}%"));
-                            break;
-                        default:
-                            throw new BadRequestException($"`{item.FilterKey}` not supporter for textFilters");
-                    }
-                }
-            }
-        }
-
-        var matrixGroup = new MatrixGroup
-        {
-            FilterKeyGroup = FilterKey.HotelAreaId,
-            MatrixItems = new List<MatrixItem>()
-        };
-
-        (await _unitOfWork.Repository<Hotel>().FindAsync(expression: expressionHotelArea, includeFunc: _ => _.Include(_ => _.Address.Area)))
-        .GroupBy(hotel => new
-        {
-            hotel.Address.AreaId,
-            hotel.Address.Area.Name
-        }).Select(group => new
-        {
-            Area = group.Key,
-            HotelCount = group.Count()
-        }).ToList().ForEach(item =>
-        {
-            var matrixItem = new MatrixItem()
-            {
-                Id = item.Area.AreaId,
-                Name = item.Area.Name,
-                Count = item.HotelCount,
-                FilterKey = FilterKey.HotelAreaId,
-                FilterRequestType = FilterRequestType.IDs,
-            };
-
-            matrixGroup.MatrixItems.Add(matrixItem);
-
-        });
-        matrixGroups.Add(matrixGroup);
-
-        matrixGroup = new MatrixGroup
-        {
-            FilterKeyGroup = FilterKey.AccommodationType,
-            MatrixItems = new List<MatrixItem>()
-        };
-
-        (await _unitOfWork.Repository<Hotel>().FindAsync(expression: expressionHotelCategory, includeFunc: _ => _.Include(_ => _.Category)))
-       .GroupBy(hotel => new
-       {
-           hotel.Category.Id,
-           hotel.Category.Name
-       }).Select(group => new
-       {
-           Category = group.Key,
-           HotelCount = group.Count()
-       }).ToList().ForEach(item =>
-       {
-           var matrixItem = new MatrixItem()
-           {
-               Id = item.Category.Id,
-               Name = item.Category.Name,
-               Count = item.HotelCount,
-               FilterKey = FilterKey.AccommodationType,
-               FilterRequestType = FilterRequestType.IDs,
-           };
-
-           matrixGroup.MatrixItems.Add(matrixItem);
-
-       });
-        matrixGroups.Add(matrixGroup);
-
-        matrixGroup = new MatrixGroup
-        {
-            FilterKeyGroup = FilterKey.StarRating,
-            MatrixItems = new List<MatrixItem>()
-        };
-
-        (await _unitOfWork.Repository<Hotel>().FindAsync(expression: expressionHotelStarRating))
-       .GroupBy(hotel => new
-       {
-           hotel.ReviewRating
-       }).Select(group => new
-       {
-           Rating = group.Key,
-           HotelCount = group.Count()
-       }).ToList().ForEach(item =>
-       {
-           var matrixItem = new MatrixItem()
-           {
-               Id = item.Rating.ReviewRating,
-               Name = "",
-               Count = item.HotelCount,
-               FilterKey = FilterKey.StarRating,
-               FilterRequestType = FilterRequestType.Range,
-           };
-
-           matrixGroup.MatrixItems.Add(matrixItem);
-
-       });
-        matrixGroups.Add(matrixGroup);
-
-        foreach (var item in matrixGroups)
-        {
-            item.MatrixItems = item.MatrixItems.OrderByDescending(_ => _.Count).ToList();
-        }
-
-        return matrixGroups;
-
+        return Task.FromResult(matrixGroups);
     }
+
     protected Task<List<SortMatrix>> CreateSortMatrix()
     {
         var sortMatrix = new List<SortMatrix>

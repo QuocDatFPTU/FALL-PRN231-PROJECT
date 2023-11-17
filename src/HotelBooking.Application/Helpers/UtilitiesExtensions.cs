@@ -1,22 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq.Expressions;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Text.Json;
 
 namespace HotelBooking.Application.Helpers;
 public static class UtilitiesExtensions
 {
-
-    public static U? Map<T, U>(this T? value, Func<T, U> mapper)
-        where T : class
-        where U : class
-    {
-        if (value == null) return null;
-        return mapper(value);
-    }
-
     public static T OrElseThrow<T, X>(this T? value, Func<X> exceptionSupplier) where X : Exception
     {
         return value ?? throw exceptionSupplier.Invoke();
@@ -40,27 +30,23 @@ public static class UtilitiesExtensions
         return result;
     }
 
-    public static string GetIpAddress(HttpContext context)
+    public static T DeepClone<T>(this T obj)
     {
-        var ipAddress = string.Empty;
+        var jsonString = JsonSerializer.Serialize(obj);
+        return JsonSerializer.Deserialize<T>(jsonString);
+    }
 
-        var remoteIpAddress = context.Connection.RemoteIpAddress;
-
-        if (remoteIpAddress != null)
+    public static bool RemoveIf<T>(this ICollection<T> collection, Func<T, bool> filter)
+    {
+        if (filter == null) throw new ArgumentNullException(nameof(filter));
+        bool removed = false;
+        var itemsToRemove = collection.Where(filter).ToList();
+        foreach (var item in itemsToRemove)
         {
-            if (remoteIpAddress.AddressFamily == AddressFamily.InterNetworkV6)
-            {
-                remoteIpAddress = Dns.GetHostEntry(remoteIpAddress).AddressList
-                    .FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork);
-            }
-
-            if (remoteIpAddress != null) ipAddress = remoteIpAddress.ToString();
-
-            Console.WriteLine(ipAddress);
-            return ipAddress;
+            collection.Remove(item);
+            removed = true;
         }
-
-        return "127.0.0.1";
+        return removed;
     }
 
     public static string GetIpAddress()
@@ -77,48 +63,6 @@ public static class UtilitiesExtensions
         }
 
         return "127.0.0.1";
-    }
-
-    // UtilitiesExtensions.GetLocalIPv4(NetworkInterfaceType.Wireless80211)
-    public static string GetLocalIPv4(NetworkInterfaceType _type)
-    {
-        foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
-        {
-            if (item.NetworkInterfaceType == _type && item.OperationalStatus == OperationalStatus.Up)
-            {
-                foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
-                {
-                    if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                    {
-                        Console.WriteLine(ip.Address.ToString());
-                        return ip.Address.ToString();
-                    }
-                }
-            }
-        }
-        return "127.0.0.1";
-    }
-
-    public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> left, Expression<Func<T, bool>> right)
-    {
-        Expression<Func<T, bool>> combined = Expression.Lambda<Func<T, bool>>(
-            Expression.And(
-                left.Body,
-                new ExpressionParameterReplacer(right.Parameters, left.Parameters).Visit(right.Body)
-            ), left.Parameters);
-
-        return combined;
-    }
-
-    public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> left, Expression<Func<T, bool>> right)
-    {
-        Expression<Func<T, bool>> combined = Expression.Lambda<Func<T, bool>>(
-            Expression.Or(
-                left.Body,
-                new ExpressionParameterReplacer(right.Parameters, left.Parameters).Visit(right.Body)
-            ), left.Parameters);
-
-        return combined;
     }
 
     public static Expression<Func<T, bool>> AndAlso<T>(this Expression<Func<T, bool>> left, Expression<Func<T, bool>> right)
