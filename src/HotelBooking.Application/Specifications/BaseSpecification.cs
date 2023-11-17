@@ -20,13 +20,21 @@ public class BaseSpecification<T> : ISpecifications<T>
         Includes.Add(includeExpression);
     }
 
-    public void AddOrderBy(Expression<Func<T, object>> OrderByexpression)
+    public void AddOrderBy(Expression<Func<T, object>> OrderByexpression, Expression<Func<T, object>>? ThenOrderByexpression = null)
     {
         OrderBy = a => a.OrderBy(OrderByexpression);
+        if (ThenOrderByexpression != null)
+        {
+            OrderBy = a => a.OrderBy(OrderByexpression).ThenBy(ThenOrderByexpression);
+        }
     }
-    public void AddOrderByDecending(Expression<Func<T, object>> OrderByDecending)
+    public void AddOrderByDecending(Expression<Func<T, object>> OrderByDecending, Expression<Func<T, object>>? ThenOrderByDecending = null)
     {
         OrderBy = a => a.OrderByDescending(OrderByDecending);
+        if (ThenOrderByDecending != null)
+        {
+            OrderBy = a => a.OrderByDescending(OrderByDecending).ThenBy(ThenOrderByDecending);
+        }
     }
 
     public void AddFilter(Expression<Func<T, bool>> expression)

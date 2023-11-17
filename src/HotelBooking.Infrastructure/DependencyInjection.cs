@@ -56,7 +56,6 @@ public static class DependencyInjection
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
            options.UseMySql(defaultConnection, ServerVersion.AutoDetect(defaultConnection),
                builder => builder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
-                  .ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
                   .AddInterceptors(sp.GetServices<ISaveChangesInterceptor>())
                   .EnableSensitiveDataLogging()
                   .EnableDetailedErrors());

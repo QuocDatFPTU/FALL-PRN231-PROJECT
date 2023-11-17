@@ -19,13 +19,13 @@ public class HotelSearchWithSpecification : BaseSpecification<Hotel>
                 switch (request.Sorting.SortField)
                 {
                     case SortField.Ranking:
-                        AddOrderBy(_ => _.ReviewCount);
+                        AddOrderBy(_ => _.ReviewCount, _ => _.Id);
                         break;
                     case SortField.Price:
-                        AddOrderBy(_ => _.RoomTypes.Min(rt => rt.Price));
+                        AddOrderBy(_ => _.RoomTypes.Min(rt => rt.Price), _ => _.Id);
                         break;
                     case SortField.ReviewScore:
-                        AddOrderBy(_ => _.ReviewRating);
+                        AddOrderBy(_ => _.ReviewRating, _ => _.Id);
                         break;
                 }
                 break;
@@ -34,13 +34,13 @@ public class HotelSearchWithSpecification : BaseSpecification<Hotel>
                 switch (request.Sorting.SortField)
                 {
                     case SortField.Ranking:
-                        AddOrderByDecending(_ => _.ReviewCount);
+                        AddOrderByDecending(_ => _.ReviewCount, _ => _.Id);
                         break;
                     case SortField.Price:
-                        AddOrderByDecending(_ => _.RoomTypes.Min(rt => rt.Price));
+                        AddOrderByDecending(_ => _.RoomTypes.Min(rt => rt.Price), _ => _.Id);
                         break;
                     case SortField.ReviewScore:
-                        AddOrderByDecending(_ => _.ReviewRating);
+                        AddOrderByDecending(_ => _.ReviewRating, _ => _.Id);
                         break;
                 }
                 break;
